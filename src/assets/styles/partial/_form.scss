@@ -1,0 +1,67 @@
+.form {
+    &__container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 400px;
+        padding: 30px 20px;
+        background-color: $white;
+        border-radius: 4px;
+        transform: translate(-50%, -50%);
+    }
+
+    &__element {
+        // display: flex;
+        margin-bottom: 20px;
+    }
+
+    &__label {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: $color-main;
+    }
+
+    &__input {
+        display: block;
+        padding: 10px 15px;
+        width: 100%;
+        border-radius: 4px;
+        color: $color-main;
+        border: 1px solid $grey;
+        outline: none;
+        transition: all 0.2s ease;
+        background-color: $color-background;
+
+        &::placeholder {
+            color: rgba($dark, 0.5);
+        }
+
+        &:focus {
+            border-color: rgba($dark, 0.5);
+        }
+    }
+
+    &__title {
+        font-size: 32px;
+        color: $color-main;
+        margin-bottom: 35px;
+    }
+
+    &__submit {
+        display: block;
+        padding: 10px 15px;
+        width: 100%;
+        border: none;
+        border-radius: 4px;
+        color: $white;
+        font-weight: 700;
+        cursor: pointer;
+        background: linear-gradient(to right, rgba(73, 155, 234, 1) 0%, rgba(32, 124, 229, 1) 100%);
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: linear-gradient(to right, rgba(73, 155, 234, 1) 25%, rgba(32, 124, 229, 1) 75%);
+        }
+    }
+}
