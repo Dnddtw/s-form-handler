@@ -1,46 +1,67 @@
 import React from 'react';
 
-const InputEmail = (props) => {
-    // const { type = "email" } = props;
-    // const { error } = { props };
+const FormLabel = (props) => {
+    return <label htmlFor={`${props.name}-id`} className="form__label"> {props.children} </label>
+}
 
-    // const validError = error ? props
+const InputEmail = (props) => {
+    const { formID, name, inputHandler } = props;
 
     return (
         <div className="form__element">
-            <label htmlFor="email-input" className="form__label"> {props.children} </label>
-            <input type="email" placeholder="usermail@example.com" className="form__input" id="email-input"/>
+            <FormLabel name={name}> {props.children} </FormLabel>
+            <input 
+                type="email" 
+                onChange={(event) => inputHandler(formID, { name }, event)} 
+                className="form__input" 
+                id={`${name}-id`} 
+                name={name}
+            />
             {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
         </div>
     );
-}
+};
 
 const InputPassword = (props) => {
+    const { formID, name, inputHandler } = props;
+
     return (
         <div className="form__element">
-            <label htmlFor="password" className="form__label"> {props.children} </label>
-            <input type="password" className="form__input" placeholder="•••••••••••"/>
-            {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
+            <FormLabel name={name}> {props.children} </FormLabel>
+            <input 
+                type="password" 
+                className="form__input" 
+                onChange={(event) => inputHandler(formID, { name }, event)}
+                id={`${name}-id`} 
+                name={name}
+            />
         </div>
     );
-}
+};
 
 const InputPasswordWithLink = (props) => {
+    const { formID, name, inputHandler } = props;
+    
     return (
         <div className="form__element">
             <div className="form__flex">
-                <label htmlFor="password" className="form__label"> {props.children} </label>
+                <FormLabel name={name}> {props.children} </FormLabel>
                 <a href="#" className="form__link">Забыли пароль?</a>    
             </div>
-            <input type="password" className="form__input" id="" placeholder="•••••••••••"/>
-            {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
+            <input 
+                type="password" 
+                className="form__input" 
+                onChange={(event) => inputHandler(formID, { name }, event)}
+                id={`${name}-id`} 
+                name={name}
+            />
         </div>
     );
-}
+};
 
 const FormTitle = (props) => {
     return <h1 className="form__title">{props.children}</h1>   
-}
+};
 
 const FormSubmitButton = (props) => {
     return (
@@ -48,7 +69,7 @@ const FormSubmitButton = (props) => {
             <button className="form__submit">{props.children}</button>
         </div>
     );
-}
+};
 
 const FormAdditional = (props) => {
     return (
@@ -56,7 +77,7 @@ const FormAdditional = (props) => {
             <div className="popup__link">{props.children}</div>
         </div>
     );
-}
+};
 
 const FormSelect = (props) => {
     return (
@@ -72,7 +93,7 @@ const FormSelect = (props) => {
             {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
         </div>
     );
-}
+};
 
 const FormTermOfUse = (props) => {
     return (
@@ -83,7 +104,7 @@ const FormTermOfUse = (props) => {
             </label>
         </div>
     );
-}
+};
 
 export { 
     InputEmail, 
