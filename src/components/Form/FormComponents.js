@@ -79,7 +79,7 @@ const FormTermOfUse = (props) => {
         <div className="form__element checkbox">
             <label htmlFor="term-of-use" className="checkbox__label">
                 <input type="checkbox" name="" id="term-of-use" className="checkbox__checkbox" />
-                <span className="checkbox__checkmark"></span> З Правилами та умовами надання послуг ознайомлений, і підтверджую згоду на обробку персональних даних
+                <span className="checkbox__checkmark"></span> {props.children}
             </label>
         </div>
     );
@@ -92,5 +92,6 @@ export {
     FormSubmitButton, 
     FormAdditional, 
     InputPasswordWithLink,
-    FormSelect
+    FormSelect,
+    FormTermOfUse
 };

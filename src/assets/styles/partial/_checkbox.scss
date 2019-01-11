@@ -1,9 +1,11 @@
 .checkbox {
 	&__label {
+        padding-left: 35px;
+        position: relative;
 		cursor: pointer;
 		font-size: 12px;
 		line-height: 14px;
-		color: $grey;
+		color: $pale-dark;
 	}
 
 	&__checkbox {
@@ -11,37 +13,44 @@
 		opacity: 0;
 		cursor: pointer;
 		height: 0;
-		width: 0;
+        width: 0;
+        display: none;
 	}
 
 	&__checkmark {
 		position: absolute;
 		display: block;
-		top: -4px;
+		top: -2px;
 		left: 0;
-		height: 30px;
-		width: 30px;
-		// background-color: $white;
-		border-radius: 8px;
+		height: 20px;
+		width: 20px;
+		background-color: rgba($pale-grey, 1);
+        border-radius: 2px;
+        border-color: $pale-grey;
+        transition: all 0.2s ease;
 
 		&::after {
 			content: "";
 			position: absolute;
 			display: none;
-			left: 2px;
+			left: 1px;
 			bottom: 2px;
 			right: 0;
 			top: 0;
 			margin: auto;
 			width: 4px;
-			height: 8px;
-			// border: solid $purple;
-			border-width: 0 3px 3px 0;
+			height: 7px;
+			border: solid $white;
+			border-width: 0 2px 2px 0;
 			transform: rotate(45deg);
 		}
 	}
 
 	&__checkbox:checked ~ &__checkmark::after {
 		display: block;
-	}
+    }
+    
+    &__checkbox:checked ~ &__checkmark {
+        background-color: $blue;
+    }
 }

@@ -5,6 +5,7 @@ import {
     InputPassword, 
     FormSubmitButton, 
     FormAdditional, 
+    FormTermOfUse,
     InputPasswordWithLink,
     FormSelect } from './FormComponents';
 
@@ -34,6 +35,7 @@ class FormSignup extends Component {
                     <InputPassword>Пароль</InputPassword>
                     <InputPassword>Пароль</InputPassword>
                     <FormSelect>Гражданство</FormSelect>
+                    <FormTermOfUse>Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a></FormTermOfUse>
                     <FormSubmitButton>Зарегистрироваться</FormSubmitButton>
                     <FormAdditional>Войти</FormAdditional>
                 </form>
