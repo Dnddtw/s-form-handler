@@ -11,8 +11,16 @@
     }
 
     &__element {
-        // display: flex;
         margin-bottom: 20px;
+    }
+
+    &__flex {
+        @extend .flex-justify-content-space-between;
+    }
+
+    &__link {
+        font-size: 14px;
+        @extend .text-blue;
     }
 
     &__label {
@@ -20,6 +28,20 @@
         margin-bottom: 10px;
         font-size: 14px;
         color: $color-main;
+    }
+
+    &__select {
+        display: block;
+        padding: 10px 15px;
+        width: 100%;
+        border-radius: 4px;
+        color: $color-main;
+        border: 1px solid $grey;
+        outline: none;
+        transition: all 0.2s ease;
+        background-color: $color-background;
+        appearance: none;
+        cursor: pointer;
     }
 
     &__input {
@@ -34,7 +56,7 @@
         background-color: $color-background;
 
         &::placeholder {
-            color: rgba($dark, 0.5);
+            color: rgba($dark, 0.15);
         }
 
         &:focus {

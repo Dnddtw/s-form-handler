@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import { FormTitle, InputEmail, InputPassword, FormSubmitButton, FormAdditional } from './FormComponents';
+import { FormSignin, FormSignup } from './Forms';
 
 class Form extends Component {
     render() {
         return (
-            <div className="form form__container">
-                <form className="form__sign-in">
-                    <FormTitle>Вход в систему</FormTitle>    
-                    <InputEmail>Электронная почта</InputEmail>
-                    <InputPassword>Пароль</InputPassword>
-                    <FormSubmitButton>Войти</FormSubmitButton>
-                    <FormAdditional>Зарегистрироваться</FormAdditional>
-                </form>
+            <div className="wrapper">
+                <FormSignup />
+                {/* <FormSignin /> */}
             </div>
         );
     }

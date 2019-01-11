@@ -1,3 +1,35 @@
-* {
-    font-family: "Roboto", sans-serif !important;
+.flex {
+    &-justify-content-space-between {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.select-container {
+    position: relative;
+    
+    &::after {
+        content: '';
+        position: absolute;
+        top: 13px;
+        right: 15px;
+        width: 6px;
+        height: 6px;
+        background-color: transparent;
+        border-right: 2px solid $pale-dark;
+        border-bottom: 2px solid $pale-dark;
+        transform: rotate(45deg);
+        cursor: pointer;
+        pointer-events: none;
+    }
+}
+
+.text-blue {
+    color: $light-blue;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: $blue;
+    }
 }
