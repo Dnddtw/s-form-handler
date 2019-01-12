@@ -1,21 +1,24 @@
 import React from 'react';
 
 const FormLabel = (props) => {
-    return <label htmlFor={`${props.name}-id`} className="form__label"> {props.children} </label>
+    return <label htmlFor={`${props.name}`} className="form__label"> {props.children} </label>
 }
 
 const InputEmail = (props) => {
-    const { formID, name, inputHandler } = props;
-
+    const { formID, name, handleInputChange, getFormElementValue } = props;
+    const value = getFormElementValue(formID, name);
+    const forName = `${formID}-${name}`;
+    
     return (
         <div className="form__element">
-            <FormLabel name={name}> {props.children} </FormLabel>
+            <FormLabel name={forName}> {props.children} </FormLabel>
             <input 
                 type="email" 
-                onChange={(event) => inputHandler(formID, { name }, event)} 
+                onChange={(event) => handleInputChange(formID, { name }, event)} 
                 className="form__input" 
-                id={`${name}-id`} 
+                id={forName} 
                 name={name}
+                value={value}
             />
             {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
         </div>
@@ -23,37 +26,43 @@ const InputEmail = (props) => {
 };
 
 const InputPassword = (props) => {
-    const { formID, name, inputHandler } = props;
+    const { formID, name, handleInputChange, getFormElementValue } = props;
+    const value = getFormElementValue(formID, name);
+    const forName = `${formID}-${name}`;
 
     return (
         <div className="form__element">
-            <FormLabel name={name}> {props.children} </FormLabel>
+            <FormLabel name={forName}> {props.children} </FormLabel>
             <input 
                 type="password" 
                 className="form__input" 
-                onChange={(event) => inputHandler(formID, { name }, event)}
-                id={`${name}-id`} 
+                onChange={(event) => handleInputChange(formID, { name }, event)}
+                id={forName} 
                 name={name}
+                value={value}
             />
         </div>
     );
 };
 
 const InputPasswordWithLink = (props) => {
-    const { formID, name, inputHandler } = props;
-    
+    const { formID, name, handleInputChange, getFormElementValue } = props;
+    const value = getFormElementValue(formID, name);
+    const forName = `${formID}-${name}`;
+
     return (
         <div className="form__element">
             <div className="form__flex">
-                <FormLabel name={name}> {props.children} </FormLabel>
+                <FormLabel name={forName}> {props.children} </FormLabel>
                 <a href="#" className="form__link">Забыли пароль?</a>    
             </div>
             <input 
                 type="password" 
                 className="form__input" 
-                onChange={(event) => inputHandler(formID, { name }, event)}
-                id={`${name}-id`} 
+                onChange={(event) => handleInputChange(formID, { name }, event)}
+                id={forName} 
                 name={name}
+                value={value}
             />
         </div>
     );
@@ -65,29 +74,40 @@ const FormTitle = (props) => {
 
 const FormSubmitButton = (props) => {
     return (
-        <div className="">
+        <div>
             <button className="form__submit">{props.children}</button>
         </div>
     );
 };
 
 const FormAdditional = (props) => {
+    const { togglePopupForms } = props;
     return (
         <div className="popup__additional">
-            <div className="popup__link">{props.children}</div>
+            <button className="popup__link" onClick={togglePopupForms}> {props.children} </button>
         </div>
     );
 };
 
 const FormSelect = (props) => {
+    const { formID, name, handleInputChange, getFormElementValue } = props;
+    const value = getFormElementValue(formID, name);
+    const forName = `${formID}-${name}`;
+
     return (
         <div className="form__element">
-            <label htmlFor="citizenship" className="form__label"> {props.children} </label>
+            <FormLabel name={forName}> {props.children} </FormLabel>
             <div className="select-container">
-                <select name="" id="citizenship" className="form__select">
-                    <option value="">1111</option>
-                    <option value="">2222</option>
-                    <option value="">3333</option>
+                <select 
+                    name={name} 
+                    id={forName}  
+                    className="form__select"
+                    onChange={(event) => handleInputChange(formID, { name }, event)}
+                    value={value}>
+
+                    <option value="1111">1111</option>
+                    <option value="2222">2222</option>
+                    <option value="3333">3333</option>
                 </select>
             </div>
             {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
@@ -96,10 +116,21 @@ const FormSelect = (props) => {
 };
 
 const FormTermOfUse = (props) => {
+    const { formID, name, handleInputChange, getFormElementValue } = props;
+    const value = getFormElementValue(formID, name);
+    const forName = `${formID}-${name}`;
+
     return (
         <div className="form__element checkbox">
-            <label htmlFor="term-of-use" className="checkbox__label">
-                <input type="checkbox" name="" id="term-of-use" className="checkbox__checkbox" />
+            <label htmlFor={forName} className="checkbox__label">
+                <input 
+                    type="checkbox" 
+                    name={name} 
+                    id={forName} 
+                    className="checkbox__checkbox" 
+                    onChange={(event) => handleInputChange(formID, { name }, event)}
+                    value={value}
+                />
                 <span className="checkbox__checkmark"></span> {props.children}
             </label>
         </div>

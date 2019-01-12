@@ -29,6 +29,7 @@
         text-decoration: none;
         background-color: $color-background;
         transition: all 0.2s ease;
+        outline: none;
         cursor: pointer;
 
         &:hover {

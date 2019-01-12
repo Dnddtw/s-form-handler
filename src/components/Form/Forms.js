@@ -15,30 +15,32 @@ class FormSignin extends Component {
     }
 
     render() {
-        const { formID, inputHandler } = this.props;
-        
+        const { formID, handleInputChange, getFormElementValue, togglePopupForms } = this.props;
+
         return (
             <div className="form form__container">
                 <form className="form__sign-in">
                     <FormTitle>Вход в систему</FormTitle>    
 
                     <InputEmail 
-                        inputHandler={inputHandler} 
+                        handleInputChange={handleInputChange}
+                        getFormElementValue={getFormElementValue} 
                         formID={formID}
                         name="email"> 
                         Электронная почта 
                     </InputEmail>
 
                     <InputPasswordWithLink
-                        inputHandler={inputHandler} 
+                        handleInputChange={handleInputChange}
+                        getFormElementValue={getFormElementValue} 
                         formID={formID}
-                        name="password">
+                        name="password"> 
                         Пароль
                     </InputPasswordWithLink>
 
                     <FormSubmitButton>Войти</FormSubmitButton>
 
-                    <FormAdditional>Зарегистрироваться</FormAdditional>
+                    <FormAdditional togglePopupForms={togglePopupForms}>Зарегистрироваться</FormAdditional>
                 </form>
             </div>
         );
@@ -51,7 +53,7 @@ class FormSignup extends Component {
     }
 
     render() {
-        const { formID, inputHandler } = this.props;
+        const { formID, handleInputChange, getFormElementValue, togglePopupForms } = this.props;
 
         return (
             <div className="form form__container">
@@ -59,33 +61,48 @@ class FormSignup extends Component {
                     <FormTitle>Регистрация в системе</FormTitle> 
 
                     <InputEmail 
-                        inputHandler={inputHandler} 
+                        handleInputChange={handleInputChange}
+                        getFormElementValue={getFormElementValue} 
                         formID={formID}
                         name="email"> 
                         Электронная почта 
                     </InputEmail>
 
                     <InputPassword
-                        inputHandler={inputHandler} 
+                        handleInputChange={handleInputChange} 
+                        getFormElementValue={getFormElementValue}
                         formID={formID}
                         name="password">
                         Пароль
                     </InputPassword>
 
                     <InputPassword
-                        inputHandler={inputHandler} 
+                        handleInputChange={handleInputChange} 
+                        getFormElementValue={getFormElementValue}
                         formID={formID}
                         name="repeatPassword">
                         Повторите пароль
                     </InputPassword>
 
-                    <FormSelect>Гражданство</FormSelect>
+                    <FormSelect
+                        name="citizenship"
+                        formID={formID}
+                        handleInputChange={handleInputChange}
+                        getFormElementValue={getFormElementValue}>
+                        Гражданство
+                    </FormSelect>
 
-                    <FormTermOfUse>Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a></FormTermOfUse>
+                    <FormTermOfUse
+                        name="term-of-use"
+                        formID={formID}
+                        handleInputChange={handleInputChange}
+                        getFormElementValue={getFormElementValue}>
+                        Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
+                    </FormTermOfUse>
 
                     <FormSubmitButton>Зарегистрироваться</FormSubmitButton>
 
-                    <FormAdditional>Войти</FormAdditional>
+                    <FormAdditional togglePopupForms={togglePopupForms}>Войти</FormAdditional>
                 </form>
             </div>
         );
