@@ -95,7 +95,7 @@ class Form extends Component {
         const formData = this.state.formsData[id];
 
         const canIChangeSubmitResponseState = Object.entries(formData).filter(([name, element]) => {
-            if (name === 'isValidAvailable') {
+            if (typeof element !== 'object' || name === "citizenship") {
                 return false;
             } 
 

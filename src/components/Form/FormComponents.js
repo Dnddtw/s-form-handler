@@ -122,7 +122,7 @@ const FormAdditional = (props) => {
 };
 
 const FormSelect = (props) => {
-    const { formID, name, handleInputChange, getFormElementValues } = props;
+    const { formID, name, handleInputChange, getFormElementValues, required } = props;
     
     const formElementData = getFormElementValues(formID, name);
     const value = formElementData.valuel
@@ -137,9 +137,9 @@ const FormSelect = (props) => {
                     name={name} 
                     id={forName}  
                     className="form__select"
+                    required={required}
                     onChange={(event) => handleInputChange(formID, { name }, event)}
                     value={value}>
-
                     <option value="1111">1111</option>
                     <option value="2222">2222</option>
                     <option value="3333">3333</option>

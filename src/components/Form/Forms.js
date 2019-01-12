@@ -84,6 +84,7 @@ const FormSignup = (props) => {
                     <FormSelect
                         name="citizenship"
                         formID={formID}
+                        required="required"
                         handleInputChange={handleInputChange}
                         getFormElementValues={getFormElementValues}>
                         Гражданство
