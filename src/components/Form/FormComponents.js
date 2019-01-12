@@ -21,7 +21,7 @@ const InputEmail = (props) => {
         <div className="form__element">
             <FormLabel name={forName}> {props.children} </FormLabel>
             <input 
-                type="email" 
+                type="text" 
                 onChange={(event) => handleInputChange(formID, { name }, event)} 
                 className={`form__input ${ifError ? 'invalid' : ''}`}
                 id={forName} 

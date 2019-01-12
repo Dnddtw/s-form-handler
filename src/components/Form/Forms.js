@@ -89,7 +89,7 @@ const FormSignup = (props) => {
                 <FormTermOfUse
                     name="termOfUse"
                     formID={formID}
-                    required="required"
+                    // required="required"
                     handleInputChange={handleInputChange}
                     getFormElementValues={getFormElementValues}>
                     Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>

@@ -3,7 +3,7 @@ import { FormSignin, FormSignup } from './Forms';
 import errorMessage from '../../text/text.json';
 
 Object.fromEntries = (array) => {
-    Object.assign({}, ...Array.from(array, ([key, value]) => ({[key]: value}) ));
+    Object.assign({}, ...Array.from(array, ([k, v]) => ({[k]: v}) ));
 }
 
 class Form extends Component {
@@ -31,24 +31,30 @@ class Form extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const thisFormsData = this.state.formsData;
-        const ifValidAvailable = thisFormsData[id] ? thisFormsData[id].isValidAvailable : '';
+        const formData = thisFormsData[id];
+        const { isValidAvailable } = formData;
+
+        console.log(" HAANDLER");
+        console.log(formData);
+        console.log(" HAANDLER");
+
         const name = element.name;
 
-        const valueInvalid = ifValidAvailable ? this.validHandler(name, value) : '';
-
+        const valueInvalid = isValidAvailable ? this.validHandler(name, value) : '';
     
         this.setState({
+            ...this.state,
             formsData: {
                 ...thisFormsData,
                 [id]: {
-                    ...thisFormsData[id],
+                    ...formData,
                     [element.name]: {
                         value: value,
                         valueInvalid: valueInvalid
                     }
                 }
             }
-        }, () => { console.table( thisFormsData ) });
+        }, () => { });
 
     }  
 
@@ -56,49 +62,45 @@ class Form extends Component {
         event.preventDefault();
         const thisFormsData = this.state.formsData;
 
-        console.log('Worked');
-
         this.setState({
             formsData: {
+                ...thisFormsData,
                 [id]: {
                     ...thisFormsData[id],
                     isValidAvailable: true
                 }
             }
-        }, () => { this.onSubmitValidThisForm(id) });
+        }, () => { console.table(this.state.formsData[id]); this.onSubmitValidThisForm(id) });
     }
 
     onSubmitValidThisForm = (id) => {
         const formsData = this.state.formsData;
         const formData = formsData[id];
-
-        const entries = Object.entries(formData).filter(([name, element]) => {
-            const test = (name === 'isValidAvailable') ? false : this.validHandler(name, element.value);
-            return (name === 'isValidAvailable') ? false : this.validHandler(name, element.value);
-        });
-
-        const fromEntries = Object.fromEntries(entries);
-
-        console.log(fromEntries);
-
-        this.setState({
-            formsData: {
-                ...formData,
-                [id]: fromEntries
+        const validedData = {};
+        
+        Object.entries(formData).forEach(([name, element]) => {
+            if (name == 'isValidAvailable') {
+                validedData[name] = element;
+            } else {
+                element.valueInvalid = this.validHandler(name, element.value);
+                Object.assign(validedData, { [name]: element });
             }
         });
 
-        console.table(this.state);
+        this.setState({
+            formsData: {
+                ...formsData,
+                [id]: validedData
+            }
+        }, () => { console.log( formsData ) });
     }
 
     validHandler = (name, value) => {
         switch(name) {
             case "email":
-                console.log(`${name}: ${this.validEmail(value)}`)
                 return this.validEmail(value);
             case "password":
             default:
-                console.log(`${name}: ${this.validPassword(value)}`)
                 return this.validPassword(value);
         }
     }
@@ -113,8 +115,6 @@ class Form extends Component {
         }
 
         return '';
-        
-        // return value ? emailValidRegExp.test(value) ? '' : errorMessage.email.invalid : errorMessage.email.empty;
     }
 
     validPassword = (value) => {
