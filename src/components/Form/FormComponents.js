@@ -126,7 +126,6 @@ const FormSelect = (props) => {
     
     const formElementData = getFormElementValues(formID, name);
     const value = formElementData.valuel
-    const ifError = formElementData.valueInvalid;
 
     const forName = `${formID}-${name}`;
 
@@ -155,7 +154,6 @@ const FormTermOfUse = (props) => {
     
     const formElementData = getFormElementValues(formID, name);
     const value = formElementData.valuel
-    const ifError = formElementData.valueInvalid;
 
     const forName = `${formID}-${name}`;
 

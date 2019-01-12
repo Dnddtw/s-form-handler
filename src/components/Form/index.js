@@ -10,10 +10,12 @@ class Form extends Component {
             formSwitch: true,
             formsData: {
                 signin: {
+                    isValidAvailable: false,
                     email: {value: "", valueInvalid: ""},
                     password: {value: "", valueInvalid: ""}   
                 },
                 signup: {
+                    isValidAvailable: false,
                     email: { value: "", valueInvalid: ""} ,
                     password: { value: "", valueInvalid: ""} ,
                     repeatPassword: { value: "", valueInvalid: "" },
@@ -46,7 +48,6 @@ class Form extends Component {
                 }
             }
         });
-
     }  
 
     toggleValidAvailable = (id, event) => {
@@ -73,7 +74,7 @@ class Form extends Component {
         
         // It makes a new object with updated inputInvalid (errors)
         Object.entries(formData).forEach(([name, element]) => {
-            if (name == 'isValidAvailable') {
+            if (name === 'isValidAvailable') {
                 validedData[name] = element;
             } else {
                 element.valueInvalid = this.validHandler(name, element.value);
@@ -87,7 +88,31 @@ class Form extends Component {
                 ...formsData,
                 [id]: validedData
             }
+        }, () => {this.fakeSubmitLoading(id)});
+    }
+
+    fakeSubmitLoading = (id) => {
+        const formData = this.state.formsData[id];
+
+        const canIChangeSubmitResponseState = Object.entries(formData).filter(([name, element]) => {
+            if (name === 'isValidAvailable') {
+                return false;
+            } 
+
+            return element.valueInvalid;
         });
+
+        if (canIChangeSubmitResponseState.length === 0) {
+            this.setState({
+                submitResponse: true
+            }, () => {
+                setTimeout(() => {
+                    this.setState({
+                        submitResponse: false
+                    });
+                }, 2500);
+            });
+        }
     }
 
     validHandler = (name, value) => {
@@ -134,7 +159,7 @@ class Form extends Component {
     }
 
     render() {
-        const { formSwitch } = this.state;
+        const { formSwitch, submitResponse } = this.state;
 
         return (
             <div className="wrapper">
@@ -144,12 +169,14 @@ class Form extends Component {
                     getFormElementValues={this.getFormElementValues}
                     togglePopupForms={this.togglePopupForms}
                     toggleValidAvailable={this.toggleValidAvailable}
+                    submitResponse={submitResponse}
                 />  || <FormSignin 
                     formID="signin"
                     handleInputChange={this.handleInputChange}
                     getFormElementValues={this.getFormElementValues}
                     togglePopupForms={this.togglePopupForms}
                     toggleValidAvailable={this.toggleValidAvailable}
+                    submitResponse={submitResponse}
                 />}
             </div>
         );
