@@ -10,10 +10,9 @@
 
 	&__checkbox {
 		position: absolute;
+		left: 0;
 		opacity: 0;
 		cursor: pointer;
-		height: 0;
-        width: 0;
 	}
 
 	&__checkmark {

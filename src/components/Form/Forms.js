@@ -55,7 +55,7 @@ const FormSignup = (props) => {
                     handleInputChange={handleInputChange}
                     getFormElementValues={getFormElementValues} 
                     formID={formID}
-                    // required="required"
+                    required="required"
                     name="email"> 
                     Электронная почта 
                 </InputEmail>
@@ -64,7 +64,7 @@ const FormSignup = (props) => {
                     handleInputChange={handleInputChange} 
                     getFormElementValues={getFormElementValues}
                     formID={formID}
-                    // required="required"
+                    required="required"
                     name="password">
                     Пароль
                 </InputPassword>
@@ -73,7 +73,7 @@ const FormSignup = (props) => {
                     handleInputChange={handleInputChange} 
                     getFormElementValues={getFormElementValues}
                     formID={formID}
-                    // required="required"
+                    required="required"
                     name="repeatPassword">
                     Повторите пароль
                 </InputPassword>
@@ -89,7 +89,7 @@ const FormSignup = (props) => {
                 <FormTermOfUse
                     name="termOfUse"
                     formID={formID}
-                    // required="required"
+                    required="required"
                     handleInputChange={handleInputChange}
                     getFormElementValues={getFormElementValues}>
                     Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>

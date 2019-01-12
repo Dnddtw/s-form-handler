@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import { FormSignin, FormSignup } from './Forms';
 import errorMessage from '../../text/text.json';
 
-Object.fromEntries = (array) => {
-    Object.assign({}, ...Array.from(array, ([k, v]) => ({[k]: v}) ));
-}
-
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            submitResponse: false,
             formSwitch: true,
             formsData: {
                 signin: {
@@ -33,13 +30,7 @@ class Form extends Component {
         const thisFormsData = this.state.formsData;
         const formData = thisFormsData[id];
         const { isValidAvailable } = formData;
-
-        console.log(" HAANDLER");
-        console.log(formData);
-        console.log(" HAANDLER");
-
         const name = element.name;
-
         const valueInvalid = isValidAvailable ? this.validHandler(name, value) : '';
     
         this.setState({
@@ -54,11 +45,12 @@ class Form extends Component {
                     }
                 }
             }
-        }, () => { });
+        });
 
     }  
 
     toggleValidAvailable = (id, event) => {
+        // It allows check the inputs changes in real time, when user clicked on submit button
         event.preventDefault();
         const thisFormsData = this.state.formsData;
 
@@ -70,14 +62,16 @@ class Form extends Component {
                     isValidAvailable: true
                 }
             }
-        }, () => { console.table(this.state.formsData[id]); this.onSubmitValidThisForm(id) });
+        }, () => { this.onSubmitValidThisForm(id) });
     }
 
     onSubmitValidThisForm = (id) => {
+        // The function replaces inputInvalid message (erros)
         const formsData = this.state.formsData;
         const formData = formsData[id];
         const validedData = {};
         
+        // It makes a new object with updated inputInvalid (errors)
         Object.entries(formData).forEach(([name, element]) => {
             if (name == 'isValidAvailable') {
                 validedData[name] = element;
@@ -87,15 +81,17 @@ class Form extends Component {
             }
         });
 
+        // It replaces previous formsData[id] with new
         this.setState({
             formsData: {
                 ...formsData,
                 [id]: validedData
             }
-        }, () => { console.log( formsData ) });
+        });
     }
 
     validHandler = (name, value) => {
+        // General valid handler
         switch(name) {
             case "email":
                 return this.validEmail(value);
@@ -106,6 +102,7 @@ class Form extends Component {
     }
 
     validEmail = (value) => {
+        // Valid function
         const emailValidRegExp = /\S+@\S+\.\S+/;
 
         if (value.length === 0) {
@@ -118,17 +115,19 @@ class Form extends Component {
     }
 
     validPassword = (value) => {
+        // Valid function
         return value.length === 0 ? errorMessage.password.empty : '';
     }
 
     getFormElementValues = (id, name) => {
+        // It transfers a value of input to functional component 
         const formData = this.state.formsData[id] ? this.state.formsData[id] : {};
         return formData.hasOwnProperty(name) ? formData[name] : '';
     }
 
     togglePopupForms = (event) => {
+        // It changes the popups
         event.preventDefault();
-
         this.setState({
             formSwitch: !this.state.formSwitch
         });

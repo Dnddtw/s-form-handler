@@ -1,8 +1,9 @@
 @import "variables";
+@import "mixins";
 @import "reset";
 @import "font";
-
 @import "general";
+
 @import "partial/popup";
 @import "partial/form";
 @import "partial/dropdown";
