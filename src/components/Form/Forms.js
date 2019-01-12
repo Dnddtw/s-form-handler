@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { 
     FormTitle, 
     InputEmail, 
@@ -10,30 +10,32 @@ import {
     FormSelect } from './FormComponents';
 
 const FormSignin = (props) => {
-    const { formID, handleInputChange, getFormElementValue, togglePopupForms } = props;
+    const { formID, handleInputChange, getFormElementValues, togglePopupForms, toggleValidAvailable } = props;
 
     return (
         <div className="form form__container">
-            <form className="form__sign-in">
+            <form className="form__sign-in" onSubmit={(event) => toggleValidAvailable(formID, event)}>
                 <FormTitle>Вход в систему</FormTitle>    
 
                 <InputEmail 
                     handleInputChange={handleInputChange}
-                    getFormElementValue={getFormElementValue} 
+                    getFormElementValues={getFormElementValues} 
                     formID={formID}
+                    // required="required"
                     name="email"> 
                     Электронная почта 
                 </InputEmail>
 
                 <InputPasswordWithLink
                     handleInputChange={handleInputChange}
-                    getFormElementValue={getFormElementValue} 
+                    getFormElementValues={getFormElementValues} 
                     formID={formID}
+                    // required="required"
                     name="password"> 
                     Пароль
                 </InputPasswordWithLink>
 
-                <FormSubmitButton>Войти</FormSubmitButton>
+                <FormSubmitButton formID={formID}> Войти </FormSubmitButton>
 
                 <FormAdditional togglePopupForms={togglePopupForms}>Зарегистрироваться</FormAdditional>
             </form>
@@ -42,33 +44,36 @@ const FormSignin = (props) => {
 };
 
 const FormSignup = (props) => {
-    const { formID, handleInputChange, getFormElementValue, togglePopupForms } = props;
+    const { formID, handleInputChange, getFormElementValues, togglePopupForms, toggleValidAvailable } = props;
 
     return (
         <div className="form form__container">
-            <form className="form__sign-up">
+            <form className="form__sign-up" onSubmit={(event) => toggleValidAvailable(formID, event)}>
                 <FormTitle>Регистрация в системе</FormTitle> 
 
                 <InputEmail 
                     handleInputChange={handleInputChange}
-                    getFormElementValue={getFormElementValue} 
+                    getFormElementValues={getFormElementValues} 
                     formID={formID}
+                    // required="required"
                     name="email"> 
                     Электронная почта 
                 </InputEmail>
 
                 <InputPassword
                     handleInputChange={handleInputChange} 
-                    getFormElementValue={getFormElementValue}
+                    getFormElementValues={getFormElementValues}
                     formID={formID}
+                    // required="required"
                     name="password">
                     Пароль
                 </InputPassword>
 
                 <InputPassword
                     handleInputChange={handleInputChange} 
-                    getFormElementValue={getFormElementValue}
+                    getFormElementValues={getFormElementValues}
                     formID={formID}
+                    // required="required"
                     name="repeatPassword">
                     Повторите пароль
                 </InputPassword>
@@ -77,19 +82,20 @@ const FormSignup = (props) => {
                     name="citizenship"
                     formID={formID}
                     handleInputChange={handleInputChange}
-                    getFormElementValue={getFormElementValue}>
+                    getFormElementValues={getFormElementValues}>
                     Гражданство
                 </FormSelect>
 
                 <FormTermOfUse
-                    name="term-of-use"
+                    name="termOfUse"
                     formID={formID}
+                    required="required"
                     handleInputChange={handleInputChange}
-                    getFormElementValue={getFormElementValue}>
+                    getFormElementValues={getFormElementValues}>
                     Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
                 </FormTermOfUse>
 
-                <FormSubmitButton>Зарегистрироваться</FormSubmitButton>
+                <FormSubmitButton formID={formID}> Зарегистрироваться </FormSubmitButton>
 
                 <FormAdditional togglePopupForms={togglePopupForms}>Войти</FormAdditional>
             </form>

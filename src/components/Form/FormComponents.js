@@ -4,9 +4,17 @@ const FormLabel = (props) => {
     return <label htmlFor={`${props.name}`} className="form__label"> {props.children} </label>
 }
 
+const InputInvalidText = (props) => {
+    return <p className="form__invalid"> {props.children} </p>
+}
+
 const InputEmail = (props) => {
-    const { formID, name, handleInputChange, getFormElementValue } = props;
-    const value = getFormElementValue(formID, name);
+    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
+
+    const formElementData = getFormElementValues(formID, name);
+    const value = formElementData.valuel
+    const ifError = formElementData.valueInvalid;
+
     const forName = `${formID}-${name}`;
     
     return (
@@ -15,19 +23,25 @@ const InputEmail = (props) => {
             <input 
                 type="email" 
                 onChange={(event) => handleInputChange(formID, { name }, event)} 
-                className="form__input" 
+                className={`form__input ${ifError ? 'invalid' : ''}`}
                 id={forName} 
+                required={required}
+                autoComplete="off"
                 name={name}
                 value={value}
             />
-            {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
+            {ifError && <InputInvalidText>{ifError}</InputInvalidText>}
         </div>
     );
 };
 
 const InputPassword = (props) => {
-    const { formID, name, handleInputChange, getFormElementValue } = props;
-    const value = getFormElementValue(formID, name);
+    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
+    
+    const formElementData = getFormElementValues(formID, name);
+    const value = formElementData.valuel
+    const ifError = formElementData.valueInvalid;
+
     const forName = `${formID}-${name}`;
 
     return (
@@ -35,19 +49,26 @@ const InputPassword = (props) => {
             <FormLabel name={forName}> {props.children} </FormLabel>
             <input 
                 type="password" 
-                className="form__input" 
+                className={`form__input ${ifError ? 'invalid' : ''}`}
                 onChange={(event) => handleInputChange(formID, { name }, event)}
                 id={forName} 
+                required={required}
+                autoComplete="off"
                 name={name}
                 value={value}
             />
+            {ifError && <InputInvalidText>{ifError}</InputInvalidText>}
         </div>
     );
 };
 
 const InputPasswordWithLink = (props) => {
-    const { formID, name, handleInputChange, getFormElementValue } = props;
-    const value = getFormElementValue(formID, name);
+    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
+    
+    const formElementData = getFormElementValues(formID, name);
+    const value = formElementData.valuel
+    const ifError = formElementData.valueInvalid;
+
     const forName = `${formID}-${name}`;
 
     return (
@@ -58,12 +79,15 @@ const InputPasswordWithLink = (props) => {
             </div>
             <input 
                 type="password" 
-                className="form__input" 
+                className={`form__input ${ifError ? 'invalid' : ''}`}
                 onChange={(event) => handleInputChange(formID, { name }, event)}
                 id={forName} 
+                required={required}
+                autoComplete="off"
                 name={name}
                 value={value}
             />
+            {ifError && <InputInvalidText>{ifError}</InputInvalidText>}
         </div>
     );
 };
@@ -73,15 +97,23 @@ const FormTitle = (props) => {
 };
 
 const FormSubmitButton = (props) => {
+    const { formID, toggleValidAvailable } = props;
+    
     return (
         <div>
-            <button className="form__submit">{props.children}</button>
+            <button 
+                type="submit" 
+                className="form__submit"
+                onSubmit={(event) => toggleValidAvailable(formID, event)}>
+                {props.children}
+            </button>
         </div>
     );
 };
 
 const FormAdditional = (props) => {
     const { togglePopupForms } = props;
+
     return (
         <div className="popup__additional">
             <button className="popup__link" onClick={togglePopupForms}> {props.children} </button>
@@ -90,8 +122,12 @@ const FormAdditional = (props) => {
 };
 
 const FormSelect = (props) => {
-    const { formID, name, handleInputChange, getFormElementValue } = props;
-    const value = getFormElementValue(formID, name);
+    const { formID, name, handleInputChange, getFormElementValues } = props;
+    
+    const formElementData = getFormElementValues(formID, name);
+    const value = formElementData.valuel
+    const ifError = formElementData.valueInvalid;
+
     const forName = `${formID}-${name}`;
 
     return (
@@ -110,14 +146,17 @@ const FormSelect = (props) => {
                     <option value="3333">3333</option>
                 </select>
             </div>
-            {/* <p className={`form__error ${errorValid}`}>{errorMessage}</p> */}
         </div>
     );
 };
 
 const FormTermOfUse = (props) => {
-    const { formID, name, handleInputChange, getFormElementValue } = props;
-    const value = getFormElementValue(formID, name);
+    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
+    
+    const formElementData = getFormElementValues(formID, name);
+    const value = formElementData.valuel
+    const ifError = formElementData.valueInvalid;
+
     const forName = `${formID}-${name}`;
 
     return (
@@ -126,7 +165,9 @@ const FormTermOfUse = (props) => {
                 <input 
                     type="checkbox" 
                     name={name} 
+                    required={required}
                     id={forName} 
+                    autoComplete="off"
                     className="checkbox__checkbox" 
                     onChange={(event) => handleInputChange(formID, { name }, event)}
                     value={value}
