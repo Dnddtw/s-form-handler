@@ -6,27 +6,37 @@ class Form extends Component {
         super(props);
         this.state = {
             formSwitch: true,
-            signup: {},
-            signin: {}
+            formsData: {}
         };
     }
 
     handleInputChange = (id, element, event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
+        const thisFormsData = this.state.formsData;
 
         this.setState({
-            [id]: {
-                ...this.state[id],
-                [element.name]: value
+            formsData: {
+                ...thisFormsData,
+                [id]: {
+                    ...thisFormsData[id],
+                    [element.name]: value
+                }
             }
-        }, () => { console.table(this.state); });
+        }, () => { console.table(this.state.formsData); });
     }  
-    
+
+    validEmail = () => {
+        
+    }
+
+    validPassword = (func) => {
+        
+    }
+
     getFormElementValue = (id, name) => {
-        const formData = this.state[id];
-        const test = formData.hasOwnProperty(name) ? formData[name] : '';
-        return test;
+        const formData = this.state.formsData[id] ? this.state.formsData[id] : {};
+        return formData.hasOwnProperty(name) ? formData[name] : '';
     }
 
     togglePopupForms = (event) => {
