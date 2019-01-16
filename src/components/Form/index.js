@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormSignin, FormSignup } from './Forms';
 import errorMessage from '../../text/text.json';
-
+import cx from 'classnames';
 class Form extends Component {
     constructor(props) {
         super(props);
@@ -156,28 +156,44 @@ class Form extends Component {
         this.setState({
             formSwitch: !this.state.formSwitch
         });
-    }
+		}
+		
+		_getPropsForForm = () => {
+			const { 
+				handleInputChange,
+				getFormElementValues,
+				togglePopupForms,
+				toggleValidAvailable
+			} = this;
+
+			const { submitResponse } = this.state;
+
+			return ({
+				handleInputChange,
+				getFormElementValues,
+				togglePopupForms,
+				toggleValidAvailable,
+				submitResponse
+			});
+
+
+		}
 
     render() {
-        const { formSwitch, submitResponse } = this.state;
-
+				const formStyle = cx(); 
+        const { formSwitch } = this.state;
+				const formProps = this._getPropsForForm();
+				const form = formSwitch ? <FormSignup 
+							formID="signup"
+							style = {formStyle}
+							{...formProps}
+					/> : <FormSignin 
+							formID="signin"
+							{...formProps}
+					/>;
         return (
             <div className="wrapper">
-                {formSwitch &&  <FormSignup 
-                    formID="signup" 
-                    handleInputChange={this.handleInputChange}
-                    getFormElementValues={this.getFormElementValues}
-                    togglePopupForms={this.togglePopupForms}
-                    toggleValidAvailable={this.toggleValidAvailable}
-                    submitResponse={submitResponse}
-                />  || <FormSignin 
-                    formID="signin"
-                    handleInputChange={this.handleInputChange}
-                    getFormElementValues={this.getFormElementValues}
-                    togglePopupForms={this.togglePopupForms}
-                    toggleValidAvailable={this.toggleValidAvailable}
-                    submitResponse={submitResponse}
-                />}
+                { form }
             </div>
         );
     }

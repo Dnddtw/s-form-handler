@@ -12,7 +12,7 @@ const InputEmail = (props) => {
     const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
 
     const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.valuel
+    const value = formElementData.value;
     const ifError = formElementData.valueInvalid;
 
     const forName = `${formID}-${name}`;
@@ -39,7 +39,7 @@ const InputPassword = (props) => {
     const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
     
     const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.valuel
+    const value = formElementData.value;
     const ifError = formElementData.valueInvalid;
 
     const forName = `${formID}-${name}`;
@@ -66,7 +66,7 @@ const InputPasswordWithLink = (props) => {
     const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
     
     const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.valuel
+    const value = formElementData.value;
     const ifError = formElementData.valueInvalid;
 
     const forName = `${formID}-${name}`;
@@ -125,7 +125,7 @@ const FormSelect = (props) => {
     const { formID, name, handleInputChange, getFormElementValues, required } = props;
     
     const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.valuel
+    const value = formElementData.value;
 
     const forName = `${formID}-${name}`;
 
@@ -153,7 +153,7 @@ const FormTermOfUse = (props) => {
     const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
     
     const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.valuel
+    const value = formElementData.value;
 
     const forName = `${formID}-${name}`;
 

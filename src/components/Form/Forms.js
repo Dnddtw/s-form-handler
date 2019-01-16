@@ -18,10 +18,11 @@ const FormSignin = (props) => {
             <form className="form__sign-in" onSubmit={(event) => toggleValidAvailable(formID, event)}>
                 <fieldset disabled={submitResponse}>
                     <FormTitle>Вход в систему</FormTitle>    
-                    <InputEmail 
-                        handleInputChange={handleInputChange}
-                        getFormElementValues={getFormElementValues} 
-                        formID={formID}
+										<InputEmail 
+												{...props}
+                        // handleInputChange={handleInputChange}
+                        // getFormElementValues={getFormElementValues} 
+                        // formID={formID}
                         // required="required"
                         name="email"> 
                         Электронная почта 
