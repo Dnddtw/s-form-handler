@@ -1,15 +1,15 @@
 {
-  "main.css": "/s-form-handler/static/css/main.ee203234.chunk.css",
-  "main.js": "/s-form-handler/static/js/main.c4afa0f0.chunk.js",
-  "main.js.map": "/s-form-handler/static/js/main.c4afa0f0.chunk.js.map",
-  "static/js/1.8599d57c.chunk.js": "/s-form-handler/static/js/1.8599d57c.chunk.js",
-  "static/js/1.8599d57c.chunk.js.map": "/s-form-handler/static/js/1.8599d57c.chunk.js.map",
+  "main.css": "/s-form-handler/static/css/main.6a38921c.chunk.css",
+  "main.js": "/s-form-handler/static/js/main.8285d10e.chunk.js",
+  "main.js.map": "/s-form-handler/static/js/main.8285d10e.chunk.js.map",
+  "static/js/1.79c584f1.chunk.js": "/s-form-handler/static/js/1.79c584f1.chunk.js",
+  "static/js/1.79c584f1.chunk.js.map": "/s-form-handler/static/js/1.79c584f1.chunk.js.map",
   "runtime~main.js": "/s-form-handler/static/js/runtime~main.151dd384.js",
   "runtime~main.js.map": "/s-form-handler/static/js/runtime~main.151dd384.js.map",
+  "static/css/main.6a38921c.chunk.css.map": "/s-form-handler/static/css/main.6a38921c.chunk.css.map",
   "static/media/loader.svg": "/s-form-handler/static/media/loader.283aae5e.svg",
-  "static/media/main.scss": "/s-form-handler/static/media/Sarabun-Bold.4f70ff7d.ttf",
-  "static/css/main.ee203234.chunk.css.map": "/s-form-handler/static/css/main.ee203234.chunk.css.map",
+  "static/media/main.scss": "/s-form-handler/static/media/Sarabun-Regular.9cef964b.ttf",
   "index.html": "/s-form-handler/index.html",
-  "precache-manifest.70ade5a190356f248252bd9bcc704ccc.js": "/s-form-handler/precache-manifest.70ade5a190356f248252bd9bcc704ccc.js",
+  "precache-manifest.ef39694dfa1c9e20ed3c0e1bdd02243f.js": "/s-form-handler/precache-manifest.ef39694dfa1c9e20ed3c0e1bdd02243f.js",
   "service-worker.js": "/s-form-handler/service-worker.js"
 }
