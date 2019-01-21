@@ -8,10 +8,22 @@ import {
     FormAdditional, 
     FormTermOfUse,
     InputPasswordWithLink,
-    FormSelect } from './FormComponents';
+		FormSelect } from './FormComponents';
+		
+function _getInputProps(props) {
+	const { formID, handleInputChange, value, ifError, getFormElementValues  } = props;
+	return ({
+		formID, 
+		handleInputChange, 
+		getFormElementValues,
+		value, 
+		ifError
+	});
+}
 
 const FormSignin = (props) => {
-    const { formID, handleInputChange, getFormElementValues, togglePopupForms, toggleValidAvailable, submitResponse = true } = props;
+		const { formID, togglePopupForms, submitResponse = true, toggleValidAvailable } = props;	
+		const inputComponentProps = _getInputProps(props);
 
     return (
         <div className="form form__container">
@@ -19,20 +31,13 @@ const FormSignin = (props) => {
                 <fieldset disabled={submitResponse}>
                     <FormTitle>Вход в систему</FormTitle>    
 										<InputEmail 
-												{...props}
-                        // handleInputChange={handleInputChange}
-                        // getFormElementValues={getFormElementValues} 
-                        // formID={formID}
-                        // required="required"
+												{...inputComponentProps}
                         name="email"> 
                         Электронная почта 
                     </InputEmail>
 
                     <InputPasswordWithLink
-                        handleInputChange={handleInputChange}
-                        getFormElementValues={getFormElementValues} 
-                        formID={formID}
-                        // required="required"
+												{...inputComponentProps}
                         name="password"> 
                         Пароль
                     </InputPasswordWithLink>
@@ -48,7 +53,8 @@ const FormSignin = (props) => {
 };
 
 const FormSignup = (props) => {
-    const { formID, handleInputChange, getFormElementValues, togglePopupForms, toggleValidAvailable, submitResponse = true } = props;
+	const { formID, togglePopupForms, submitResponse = true, toggleValidAvailable } = props;
+	const inputComponentProps = _getInputProps(props);
 
     return (
         <div className="form form__container">
@@ -56,47 +62,37 @@ const FormSignup = (props) => {
                 <fieldset disabled={submitResponse}>
                     <FormTitle>Регистрация в системе</FormTitle> 
                     <InputEmail 
-                        handleInputChange={handleInputChange}
-                        getFormElementValues={getFormElementValues} 
-                        formID={formID}
-                        required="required"
+												{...inputComponentProps}
+												required="required"
                         name="email"> 
                         Электронная почта 
                     </InputEmail>
 
                     <InputPassword
-                        handleInputChange={handleInputChange} 
-                        getFormElementValues={getFormElementValues}
-                        formID={formID}
+												{...inputComponentProps}
                         required="required"
                         name="password">
                         Пароль
                     </InputPassword>
 
                     <InputPassword
-                        handleInputChange={handleInputChange} 
-                        getFormElementValues={getFormElementValues}
-                        formID={formID}
+												{...inputComponentProps}
                         required="required"
                         name="repeatPassword">
                         Повторите пароль
                     </InputPassword>
 
                     <FormSelect
-                        name="citizenship"
-                        formID={formID}
+												{...inputComponentProps}
                         required="required"
-                        handleInputChange={handleInputChange}
-                        getFormElementValues={getFormElementValues}>
+                        name="citizenship">
                         Гражданство
                     </FormSelect>
 
                     <FormTermOfUse
-                        name="termOfUse"
-                        formID={formID}
+												{...inputComponentProps}
                         required="required"
-                        handleInputChange={handleInputChange}
-                        getFormElementValues={getFormElementValues}>
+                        name="termOfUse">
                         Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
                     </FormTermOfUse>
 

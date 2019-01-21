@@ -180,12 +180,10 @@ class Form extends Component {
 		}
 
     render() {
-				const formStyle = cx(); 
         const { formSwitch } = this.state;
 				const formProps = this._getPropsForForm();
 				const form = formSwitch ? <FormSignup 
 							formID="signup"
-							style = {formStyle}
 							{...formProps}
 					/> : <FormSignin 
 							formID="signin"

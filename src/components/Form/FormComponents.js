@@ -8,14 +8,37 @@ const InputInvalidText = (props) => {
     return <p className="form__invalid"> {props.children} </p>
 }
 
-const InputEmail = (props) => {
-    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
+function _getElementValues(props) {
+		// The function gets properties from Form parent and resolve it with form components
+		const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
 
     const formElementData = getFormElementValues(formID, name);
     const value = formElementData.value;
     const ifError = formElementData.valueInvalid;
 
-    const forName = `${formID}-${name}`;
+		const forName = `${formID}-${name}`;
+		
+		return ({
+			formID,
+			name,
+			required,
+			handleInputChange,
+			value,
+			ifError,
+			forName
+		});
+};
+
+export const InputEmail = (props) => {
+		const { 
+			formID, 
+			name, 
+			required, 
+			handleInputChange, 
+			value, 
+			ifError, 
+			forName 
+		} = _getElementValues(props);
     
     return (
         <div className="form__element">
@@ -35,14 +58,16 @@ const InputEmail = (props) => {
     );
 };
 
-const InputPassword = (props) => {
-    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
-    
-    const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.value;
-    const ifError = formElementData.valueInvalid;
-
-    const forName = `${formID}-${name}`;
+export const InputPassword = (props) => {
+		const { 
+			formID, 
+			name, 
+			required, 
+			handleInputChange, 
+			value, 
+			ifError, 
+			forName 
+		} = _getElementValues(props);
 
     return (
         <div className="form__element">
@@ -62,14 +87,16 @@ const InputPassword = (props) => {
     );
 };
 
-const InputPasswordWithLink = (props) => {
-    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
-    
-    const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.value;
-    const ifError = formElementData.valueInvalid;
-
-    const forName = `${formID}-${name}`;
+export const InputPasswordWithLink = (props) => {
+		const { 
+			formID, 
+			name, 
+			required, 
+			handleInputChange, 
+			value, 
+			ifError, 
+			forName 
+		} = _getElementValues(props);
 
     return (
         <div className="form__element">
@@ -92,11 +119,11 @@ const InputPasswordWithLink = (props) => {
     );
 };
 
-const FormTitle = (props) => {
+export const FormTitle = (props) => {
     return <h1 className="form__title">{props.children}</h1>   
 };
 
-const FormSubmitButton = (props) => {
+export const FormSubmitButton = (props) => {
     const { formID, toggleValidAvailable } = props;
     
     return (
@@ -111,7 +138,7 @@ const FormSubmitButton = (props) => {
     );
 };
 
-const FormAdditional = (props) => {
+export const FormAdditional = (props) => {
     const { togglePopupForms } = props;
 
     return (
@@ -121,13 +148,16 @@ const FormAdditional = (props) => {
     );
 };
 
-const FormSelect = (props) => {
-    const { formID, name, handleInputChange, getFormElementValues, required } = props;
-    
-    const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.value;
-
-    const forName = `${formID}-${name}`;
+export const FormSelect = (props) => {
+		const { 
+			formID, 
+			name, 
+			required, 
+			handleInputChange, 
+			value, 
+			ifError, 
+			forName 
+		} = _getElementValues(props);
 
     return (
         <div className="form__element">
@@ -149,13 +179,16 @@ const FormSelect = (props) => {
     );
 };
 
-const FormTermOfUse = (props) => {
-    const { formID, name, required = false, handleInputChange, getFormElementValues } = props;
-    
-    const formElementData = getFormElementValues(formID, name);
-    const value = formElementData.value;
-
-    const forName = `${formID}-${name}`;
+export const FormTermOfUse = (props) => {
+		const { 
+			formID, 
+			name, 
+			required, 
+			handleInputChange, 
+			value, 
+			ifError, 
+			forName 
+		} = _getElementValues(props);
 
     return (
         <div className="form__element checkbox">
@@ -176,13 +209,13 @@ const FormTermOfUse = (props) => {
     );
 };
 
-export { 
-    InputEmail, 
-    FormTitle, 
-    InputPassword, 
-    FormSubmitButton, 
-    FormAdditional, 
-    InputPasswordWithLink,
-    FormSelect,
-    FormTermOfUse
-};
+// export { 
+//     InputEmail, 
+//     FormTitle, 
+//     InputPassword, 
+//     FormSubmitButton, 
+//     FormAdditional, 
+//     InputPasswordWithLink,
+//     FormSelect,
+//     FormTermOfUse
+// };
