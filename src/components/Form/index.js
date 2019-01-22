@@ -1,200 +1,193 @@
-import React, { Component } from 'react';
-import { FormSignin, FormSignup } from './Forms';
-import errorMessage from '../../text/text.json';
-import cx from 'classnames';
+import React, { Component } from "react";
+import { FormSignin, FormSignup } from "./Forms";
+import errorMessage from "../../text/text.json";
 class Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            submitResponse: false,
-            formSwitch: true,
-            formsData: {
-                signin: {
-                    isValidAvailable: false,
-                    email: {value: "", valueInvalid: ""},
-                    password: {value: "", valueInvalid: ""}   
-                },
-                signup: {
-                    isValidAvailable: false,
-                    email: { value: "", valueInvalid: ""} ,
-                    password: { value: "", valueInvalid: ""} ,
-                    repeatPassword: { value: "", valueInvalid: "" },
-                    citizenship: {value: "", valueInvalid: ""},
-                    termOfUse: {value: false, valueInvalid: ""}
-                }
-            }
-        };
-    }
-
-    handleInputChange = (id, element, event) => {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const thisFormsData = this.state.formsData;
-        const formData = thisFormsData[id];
-        const { isValidAvailable } = formData;
-        const name = element.name;
-        const valueInvalid = isValidAvailable ? this.validHandler(name, value) : '';
-    
-        this.setState({
-            ...this.state,
-            formsData: {
-                ...thisFormsData,
-                [id]: {
-                    ...formData,
-                    [element.name]: {
-                        value: value,
-                        valueInvalid: valueInvalid
-                    }
-                }
-            }
-        });
-    }  
-
-    toggleValidAvailable = (id, event) => {
-        // It allows check the inputs changes in real time, when user clicked on submit button
-        event.preventDefault();
-        const thisFormsData = this.state.formsData;
-
-        this.setState({
-            formsData: {
-                ...thisFormsData,
-                [id]: {
-                    ...thisFormsData[id],
-                    isValidAvailable: true
-                }
-            }
-        }, () => { this.onSubmitValidThisForm(id) });
-    }
-
-    onSubmitValidThisForm = (id) => {
-        // The function replaces inputInvalid message (erros)
-        const formsData = this.state.formsData;
-        const formData = formsData[id];
-        const validedData = {};
-        
-        // It makes a new object with updated inputInvalid (errors)
-        Object.entries(formData).forEach(([name, element]) => {
-            if (name === 'isValidAvailable') {
-                validedData[name] = element;
-            } else {
-                element.valueInvalid = this.validHandler(name, element.value);
-                Object.assign(validedData, { [name]: element });
-            }
-        });
-
-        // It replaces previous formsData[id] with new
-        this.setState({
-            formsData: {
-                ...formsData,
-                [id]: validedData
-            }
-        }, () => {this.fakeSubmitLoading(id)});
-    }
-
-    fakeSubmitLoading = (id) => {
-        const formData = this.state.formsData[id];
-
-        const canIChangeSubmitResponseState = Object.entries(formData).filter(([name, element]) => {
-            if (typeof element !== 'object' || name === "citizenship") {
-                return false;
-            } 
-
-            return element.valueInvalid;
-        });
-
-        if (canIChangeSubmitResponseState.length === 0) {
-            this.setState({
-                submitResponse: true
-            }, () => {
-                setTimeout(() => {
-                    this.setState({
-                        submitResponse: false
-                    });
-                }, 2500);
-            });
+  constructor(props) {
+    super(props);
+    this.state = {
+      submitResponse: false,
+      formSwitch: true,
+      formsData: {
+        signin: {
+          isValidAvailable: false,
+          email: { value: "", valueInvalid: "" },
+          password: { value: "", valueInvalid: "" }
+        },
+        signup: {
+          isValidAvailable: false,
+          email: { value: "", valueInvalid: "" },
+          password: { value: "", valueInvalid: "" },
+          repeatPassword: { value: "", valueInvalid: "" },
+          citizenship: { value: "", valueInvalid: "" },
+          termOfUse: { value: false, valueInvalid: "" }
         }
-    }
+      }
+    };
+  }
 
-    validHandler = (name, value) => {
-        // General valid handler
-        switch(name) {
-            case "email":
-                return this.validEmail(value);
-            case "password":
-            default:
-                return this.validPassword(value);
-        }
-    }
-
-    validEmail = (value) => {
-        // Valid function
-        const emailValidRegExp = /\S+@\S+\.\S+/;
-
-        if (value.length === 0) {
-            return errorMessage.email.empty;
-        } else if (!emailValidRegExp.test(value)) {
-            return errorMessage.email.invalid;
-        }
-
-        return '';
-    }
-
-    validPassword = (value) => {
-        // Valid function
-        return value.length === 0 ? errorMessage.password.empty : '';
-    }
-
-    getFormElementValues = (id, name) => {
-        // It transfers a value of input to functional component 
-        const formData = this.state.formsData[id] ? this.state.formsData[id] : {};
-        return formData.hasOwnProperty(name) ? formData[name] : '';
-    }
-
-    togglePopupForms = (event) => {
-        // It changes the popups
-        event.preventDefault();
-        this.setState({
-            formSwitch: !this.state.formSwitch
-        });
-		}
+  handleInputChange = (id, element, event) => {
+    const target = event.target;
+		const value = target.type === "checkbox" ? target.checked : target.value;
 		
-		_getPropsForForm = () => {
-			const { 
-				handleInputChange,
-				getFormElementValues,
-				togglePopupForms,
-				toggleValidAvailable
-			} = this;
+    const thisFormsData = this.state.formsData;
+		const formData = thisFormsData[id];
+		const { isValidAvailable } = formData;
+		
+    const name = element.name;
+    const valueInvalid = isValidAvailable ? this.validHandler(name, value) : "";
 
-			const { submitResponse } = this.state;
+    this.setState({
+      ...this.state,
+      formsData: {
+        ...thisFormsData,
+        [id]: {
+          ...formData,
+          [element.name]: {
+            value: value,
+            valueInvalid: valueInvalid
+          }
+        }
+      }
+    });
+  };
 
-			return ({
-				handleInputChange,
-				getFormElementValues,
-				togglePopupForms,
-				toggleValidAvailable,
-				submitResponse
-			});
+  toggleValidAvailable = (id, event) => {
+    // It allows check the inputs changes in real time, when user clicked on submit button
+    event.preventDefault();
+    const thisFormsData = this.state.formsData;
 
+    this.setState(
+      {
+        formsData: {
+          ...thisFormsData,
+          [id]: {
+            ...thisFormsData[id],
+            isValidAvailable: true
+          }
+        }
+      }, () => { this.onSubmitValidThisForm(id); });
+  };
 
-		}
+  onSubmitValidThisForm = id => {
+    // The function replaces inputInvalid message (erros)
+    const formsData = this.state.formsData;
+    const formData = formsData[id];
+    const validedData = {};
 
-    render() {
-        const { formSwitch } = this.state;
-				const formProps = this._getPropsForForm();
-				const form = formSwitch ? <FormSignup 
-							formID="signup"
-							{...formProps}
-					/> : <FormSignin 
-							formID="signin"
-							{...formProps}
-					/>;
-        return (
-            <div className="wrapper">
-                { form }
-            </div>
-        );
+    // It makes a new object with updated inputInvalid (errors)
+    Object.entries(formData).forEach(([name, element]) => {
+      if (name === "isValidAvailable") {
+        validedData[name] = element;
+      } else {
+        element.valueInvalid = this.validHandler(name, element.value);
+        Object.assign(validedData, { [name]: element });
+      }
+    });
+
+    // It replaces previous formsData[id] with new
+    this.setState(
+      {
+        formsData: {
+          ...formsData,
+          [id]: validedData
+        }
+      }, () => { this.fakeSubmitLoading(id); });
+  };
+
+  fakeSubmitLoading = id => {
+    const formData = this.state.formsData[id];
+
+    const canIChangeSubmitResponseState = Object.entries(formData).filter(
+      ([name, element]) => {
+        if (typeof element !== "object" || name === "citizenship") { return false; }
+
+        return element.valueInvalid;
+      }
+    );
+
+    if (canIChangeSubmitResponseState.length === 0) {
+      this.setState({ submitResponse: true },
+        () => {
+          setTimeout(() => {
+            this.setState({
+              submitResponse: false
+            });
+          }, 2500);
+        }
+      );
     }
-};
+  };
+
+  validHandler = (name, value) => {
+    // General valid handler
+    switch (name) {
+      case "email":
+				return this.validEmail(value);
+				
+      case "password":
+      default:
+        return this.validPassword(value);
+    }
+  };
+
+  validEmail = value => {
+    // Valid function
+    const emailValidRegExp = /\S+@\S+\.\S+/;
+
+		if (value.length === 0) { return errorMessage.email.empty; } 
+		else if (!emailValidRegExp.test(value)) { return errorMessage.email.invalid; }
+
+    return "";
+  };
+
+  validPassword = value => {
+    // Valid function
+    return value.length === 0 ? errorMessage.password.empty : "";
+  };
+
+  getFormElementValues = (id, name) => {
+    // It transfers a value of input to functional component
+    const formData = this.state.formsData[id] ? this.state.formsData[id] : {};
+    return formData.hasOwnProperty(name) ? formData[name] : "";
+  };
+
+  togglePopupForms = event => {
+    // It changes the popups
+    event.preventDefault();
+    this.setState({
+      formSwitch: !this.state.formSwitch
+    });
+  };
+
+  _getPropsForForm = () => {
+    const {
+      handleInputChange,
+      getFormElementValues,
+      togglePopupForms,
+      toggleValidAvailable
+    } = this;
+
+    const { submitResponse } = this.state;
+
+    return {
+      handleInputChange,
+      getFormElementValues,
+      togglePopupForms,
+      toggleValidAvailable,
+      submitResponse
+    };
+  };
+
+  render() {
+    const { formSwitch } = this.state;
+    const formProps = this._getPropsForForm();
+    const form = formSwitch ? (
+      <FormSignup formID="signup" {...formProps} />
+    ) : (
+      <FormSignin formID="signin" {...formProps} />
+    );
+    return <div className="wrapper">{form}</div>;
+  }
+}
 
 export default Form;
