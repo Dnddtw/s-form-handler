@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { FormSignin, FormSignup } from "./Forms";
+import FormSignup from "./FormSignup";
+import FormSignin from "./FormSignin";
 import errorMessage from "../../text/text.json";
 class Form extends Component {
   constructor(props) {

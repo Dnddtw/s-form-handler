@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import { string, func } from 'prop-types';
 
 const FormLabel = props => {
   return (
@@ -10,6 +10,24 @@ const FormLabel = props => {
 const InputInvalidText = props => {
   return <p className="form__invalid"> {props.children} </p>;
 };
+
+export const _getInputProps = (props) => {
+  const {
+    formID,
+    handleInputChange,
+    value,
+    ifError,
+    getFormElementValues
+	} = props;
+	
+  return {
+    formID,
+    handleInputChange,
+    getFormElementValues,
+    value,
+    ifError
+  };
+}
 
 function _getElementValues(props) {
   // The function gets properties from Form parent and resolve it with form components
@@ -220,11 +238,11 @@ export const FormTermOfUse = props => {
 };
 
 const InputPropTypes = {
-	formID: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	handleInputChange: PropTypes.func.isRequired,
-	getFormElementValues: PropTypes.func.isRequired,
-	required: PropTypes.string
+	formID: string.isRequired,
+	name: string.isRequired,
+	handleInputChange: func.isRequired,
+	getFormElementValues: func.isRequired,
+	required: string
 }
 
 InputEmail.propTypes = { ...InputPropTypes };
@@ -234,9 +252,9 @@ FormSelect.propTypes = { ...InputPropTypes };
 FormTermOfUse.propTypes = { ...InputPropTypes };
 
 FormSubmitButton.propTypes = {
-	formID: PropTypes.string.isRequired
+	formID: string.isRequired
 };
 
 FormAdditional.propTypes = {
-	togglePopupForms: PropTypes.func.isRequired
+	togglePopupForms: func.isRequired
 };

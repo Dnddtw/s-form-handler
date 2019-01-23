@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import FormPropTypes from './FormPropTypes';
 import Loader from "../Loader";
 import {
   FormTitle,
@@ -8,66 +8,13 @@ import {
   FormSubmitButton,
   FormAdditional,
   FormTermOfUse,
-  InputPasswordWithLink,
-  FormSelect
+	FormSelect,
+	_getInputProps
 } from "./FormComponents";
 
-function _getInputProps(props) {
-  const {
-    formID,
-    handleInputChange,
-    value,
-    ifError,
-    getFormElementValues
-	} = props;
-	
-  return {
-    formID,
-    handleInputChange,
-    getFormElementValues,
-    value,
-    ifError
-  };
-}
 
-const FormSignin = props => {
-	const inputComponentProps = _getInputProps(props);
-  const {
-    formID,
-    togglePopupForms,
-    submitResponse = true,
-    toggleValidAvailable
-  } = props;
 
-  return (
-    <div className="form form__container">
-      <form
-        className="form__sign-in"
-        onSubmit={event => toggleValidAvailable(formID, event)}
-      >
-        <fieldset disabled={submitResponse}>
-          <FormTitle>Вход в систему</FormTitle>
-          <InputEmail {...inputComponentProps} name="email">
-            Электронная почта
-          </InputEmail>
-
-          <InputPasswordWithLink {...inputComponentProps} name="password">
-            Пароль
-          </InputPasswordWithLink>
-
-          <FormSubmitButton formID={formID}> Войти </FormSubmitButton>
-          <FormAdditional togglePopupForms={togglePopupForms}>
-            Зарегистрироваться
-          </FormAdditional>
-
-          {submitResponse && <Loader />}
-        </fieldset>
-      </form>
-    </div>
-  );
-};
-
-const FormSignup = props => {
+const FormSignup = (props) => {
 	const inputComponentProps = _getInputProps(props);
   const {
     formID,
@@ -138,14 +85,5 @@ const FormSignup = props => {
   );
 };
 
-const FormPropTypes = {
-  formID: PropTypes.string.isRequired,
-  togglePopupForms: PropTypes.func.isRequired,
-  toggleValidAvailable: PropTypes.func.isRequired,
-  submitResponse: PropTypes.bool
-};
-
-FormSignin.propTypes = { ...FormPropTypes };
 FormSignup.propTypes = { ...FormPropTypes };
-
-export { FormSignin, FormSignup };
+export default FormSignup;
