@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import FormSignup from "./FormSignup";
 import FormSignin from "./FormSignin";
-import errorMessage from "../../text/text.json";
+import FormTest from "./FormTest";
+import { validEmail, validPassword } from "./InputValidFunctions";
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +37,7 @@ class Form extends Component {
 		const { isValidAvailable } = formData;
 		
     const name = element.name;
-    const valueInvalid = isValidAvailable ? this.validHandler(name, value) : "";
+    const valueInvalid = isValidAvailable ? this._validHandler(name, value) : "";
 
     this.setState({
       ...this.state,
@@ -80,7 +82,7 @@ class Form extends Component {
       if (name === "isValidAvailable") {
         validedData[name] = element;
       } else {
-        element.valueInvalid = this.validHandler(name, element.value);
+        element.valueInvalid = this._validHandler(name, element.value);
         Object.assign(validedData, { [name]: element });
       }
     });
@@ -119,32 +121,19 @@ class Form extends Component {
     }
   };
 
-  validHandler = (name, value) => {
+  _validHandler = (name, value) => {
     // General valid handler
     switch (name) {
       case "email":
-				return this.validEmail(value);
+				return validEmail(value);
 				
       case "password":
       default:
-        return this.validPassword(value);
+        return validPassword(value);
     }
   };
 
-  validEmail = value => {
-    // Valid function
-    const emailValidRegExp = /\S+@\S+\.\S+/;
-
-		if (value.length === 0) { return errorMessage.email.empty; } 
-		else if (!emailValidRegExp.test(value)) { return errorMessage.email.invalid; }
-
-    return "";
-  };
-
-  validPassword = value => {
-    // Valid function
-    return value.length === 0 ? errorMessage.password.empty : "";
-  };
+  
 
   getFormElementValues = (id, name) => {
     // It transfers a value of input to functional component
@@ -180,14 +169,17 @@ class Form extends Component {
   };
 
   render() {
-    const { formSwitch } = this.state;
-    const formProps = this._getPropsForForm();
-    const form = formSwitch ? (
-      <FormSignup formID="signup" {...formProps} />
-    ) : (
-      <FormSignin formID="signin" {...formProps} />
+    // const { formSwitch } = this.state;
+    // const formProps = this._getPropsForForm();
+    return (
+      <div className="wrapper">
+        <FormTest 
+          render={(theProps) => (
+            <FormSignup {...theProps} />
+          )}
+        />
+      </div>
     );
-    return <div className="wrapper">{form}</div>;
   }
 }
 

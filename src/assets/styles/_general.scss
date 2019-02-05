@@ -5,13 +5,13 @@
     }
 }
 
-.select-container {
+.form-select {
     position: relative;
     
     &::after {
         content: '';
         position: absolute;
-        top: 13px;
+        top: 12px;
         right: 15px;
         width: 6px;
         height: 6px;
@@ -21,6 +21,48 @@
         transform: rotate(45deg);
         cursor: pointer;
         pointer-events: none;
+    }
+
+    .selected--flag--option {
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        &::before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
+    .country-flag {
+        display: flex;
+        align-items: center;
+    }
+
+    &.flag-select {
+        img {
+            position: relative;
+            top: 1px;
+            width: 20px;
+            height: auto;
+            border-radius: 2px;
+        }
+    }
+
+    .arrow-down {
+        display: none;
+    }
+
+    .country-label {
+        font-size: 13px !important;
+    }
+
+    .flag-options {
+        left: 0;
+        right: 0;
     }
 }
 

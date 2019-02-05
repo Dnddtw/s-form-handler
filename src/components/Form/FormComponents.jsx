@@ -1,5 +1,6 @@
 import React from "react";
 import { string, func } from 'prop-types';
+import ReactFlagsSelect from 'react-flags-select';
 
 const FormLabel = props => {
   return (
@@ -32,24 +33,23 @@ export const _getInputProps = (props) => {
 function _getElementValues(props) {
   // The function gets properties from Form parent and resolve it with form components
   const {
-    formID,
     name,
+    value,
     required = false,
-    handleInputChange,
-    getFormElementValues
+    inputChangeHandler
   } = props;
 
   const formElementData = getFormElementValues(formID, name);
   const value = formElementData.value;
   const ifError = formElementData.valueInvalid;
 
-  const forName = `${formID}-${name}`;
+  // const forName = `${formID}-${name}`;
+  const forName = `${name}`;
 
   return {
-    formID,
     name,
     required,
-    handleInputChange,
+    inputChangeHandler,
     value,
     ifError,
     forName
@@ -58,27 +58,28 @@ function _getElementValues(props) {
 
 export const InputEmail = props => {
   const {
-    formID,
     name,
     required,
-    handleInputChange,
+    inputChangeHandler,
     value,
     ifError,
     forName
   } = _getElementValues(props);
+
+  const ifError = false;
 
   return (
     <div className="form__element">
       <FormLabel name={forName}> {props.children} </FormLabel>
       <input
         type="text"
-        onChange={event => handleInputChange(formID, { name }, event)}
+        onChange={event => inputChangeHandler({ name }, event)}
         className={`form__input ${ifError ? "invalid" : ""}`}
         id={forName}
         required={required}
         autoComplete="off"
         name={name}
-        value={value}
+        // value={value}
       />
       {ifError && <InputInvalidText>{ifError}</InputInvalidText>}
     </div>
@@ -190,20 +191,10 @@ export const FormSelect = props => {
   return (
     <div className="form__element">
       <FormLabel name={forName}> {props.children} </FormLabel>
-      <div className="select-container">
-        <select
-          name={name}
-          id={forName}
-          className="form__select"
-          required={required}
-          onChange={event => handleInputChange(formID, { name }, event)}
-          value={value}
-        >
-          <option value="1111">1111</option>
-          <option value="2222">2222</option>
-          <option value="3333">3333</option>
-        </select>
-      </div>
+      <ReactFlagsSelect 
+        className="form__select form-select"
+        defaultCountry="UA"
+      />
     </div>
   );
 };

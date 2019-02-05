@@ -9,10 +9,12 @@
     "node-sass": "^4.11.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.3"
+    "react-flags-select": "^1.1.10",
+    "react-scripts": "2.1.3",
+    "react-select": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "BROWSER=safari react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "predeploy": "npm run build",
