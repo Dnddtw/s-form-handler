@@ -13,22 +13,18 @@ import {
 const initialValues = {
   submitResponse: false,
   isValidAvailable: false,
-  email: { value: "", error: "" },
-  password: { value: "", error: "" },
-  repeatPassword: { value: "", error: "" },
-  citizenship: { value: "", error: "" },
-  termOfUse: { value: false, error: "" }
+  email: { value: "", error: "", touched: false },
+  password: { value: "", error: "", touched: false },
+  repeatPassword: { value: "", error: "", touched: false },
+  citizenship: { value: "", error: "", touched: false },
+  termOfUse: { value: false, error: "", touched: false }
 };
 
 class FormSignup extends Component {
-  state = {...initialValues};
+  state = { ...initialValues };
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
-  _handleInputChange = this.props._handleInputChange;
-  _toggleValidAvailable = this.props._toggleValidAvailable;
+  _handleInputChange = this.props_handleInputChange;
+  _toggleValidAvailable = this.props_toggleValidAvailable;
 
   render() {
     const { submitResponse, email, password, repeatPassword, citizenship, termOfUse } = this.state;
@@ -44,7 +40,6 @@ class FormSignup extends Component {
             <InputEmail 
               inputChangeHandler={this._handleInputChange} 
               elementValues={email}
-              required="required" 
               name="email">
               Электронная почта
             </InputEmail>
@@ -52,7 +47,6 @@ class FormSignup extends Component {
             <InputPassword
               inputChangeHandler={this._handleInputChange}
               elementValues={password}
-              required="required"
               name="password">
               Пароль
             </InputPassword>
@@ -60,14 +54,12 @@ class FormSignup extends Component {
             <InputPassword
               inputChangeHandler={this._handleInputChange}
               elementValues={repeatPassword}
-              required="required"
               name="repeatPassword">
               Повторите пароль
             </InputPassword>
   
             {/* <FormSelect
               inputChangeHandler={this._handleInputChange}
-              required="required"
               name="citizenship"
             >
               Гражданство
@@ -76,20 +68,17 @@ class FormSignup extends Component {
             <FormTermOfUse
               inputChangeHandler={this._handleInputChange}
               elementValues={termOfUse}
-              required="required"
               name="termOfUse">
-              Соглашаюсь с
-              <a href="#" className="text-blue">
-                правилами и условиями сервиса
-              </a>
+              Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
             </FormTermOfUse>
   
             <FormSubmitButton>
               Зарегистрироваться
             </FormSubmitButton>
-            {/* <FormAdditional togglePopupForms={togglePopupForms}>
+
+            <FormAdditional togglePopupForms={this.props.togglePopupForms}>
               Войти
-            </FormAdditional> */}
+            </FormAdditional>
   
             {submitResponse && <Loader />}
           </fieldset>

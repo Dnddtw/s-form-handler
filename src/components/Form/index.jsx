@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import FormSignup from "./FormSignup";
 import FormSignin from "./FormSignin";
-import FormTest from "./FormTest";
+import Form from "./Form";
 
-class Form extends Component {
+class FormContainer extends Component {
   state = {
-    // submitResponse: false,
     formSwitch: true,
     // formsData: {
     //   signin: {
@@ -13,42 +12,8 @@ class Form extends Component {
     //     email: { value: "", valueInvalid: "" },
     //     password: { value: "", valueInvalid: "" }
     //   },
-    //   signup: {
-    //     isValidAvailable: false,
-    //     email: { value: "", valueInvalid: "" },
-    //     password: { value: "", valueInvalid: "" },
-    //     repeatPassword: { value: "", valueInvalid: "" },
-    //     citizenship: { value: "", valueInvalid: "" },
-    //     termOfUse: { value: false, valueInvalid: "" }
-    //   }
     // }
   };
-
-  // handleInputChange = (id, element, event) => {
-  //   const target = event.target;
-	// 	const value = target.type === "checkbox" ? target.checked : target.value;
-		
-  //   const thisFormsData = this.state.formsData;
-	// 	const formData = thisFormsData[id];
-	// 	const { isValidAvailable } = formData;
-		
-  //   const name = element.name;
-  //   const valueInvalid = isValidAvailable ? this._validHandler(name, value) : "";
-
-  //   this.setState({
-  //     ...this.state,
-  //     formsData: {
-  //       ...thisFormsData,
-  //       [id]: {
-  //         ...formData,
-  //         [element.name]: {
-  //           value: value,
-  //           valueInvalid: valueInvalid
-  //         }
-  //       }
-  //     }
-  //   });
-  // };
 
   // toggleValidAvailable = (event) => {
   //   // It allows check the inputs changes in real time, when user clicked on submit button
@@ -108,64 +73,21 @@ class Form extends Component {
   //   }
   // };
 
-  // _validHandler = (name, value) => {
-  //   // General valid handler
-  //   switch (name) {
-  //     case "email":
-	// 			return validEmail(value);
-				
-  //     case "password":
-  //     default:
-  //       return validPassword(value);
-  //   }
-  // };
-
-  
-
-  // getFormElementValues = (id, name) => {
-  //   // It transfers a value of input to functional component
-  //   const formData = this.state.formsData[id] ? this.state.formsData[id] : {};
-  //   return formData.hasOwnProperty(name) ? formData[name] : "";
-  // };
-
-  // togglePopupForms = event => {
-  //   // It changes the popups
-  //   event.preventDefault();
-  //   this.setState({
-  //     formSwitch: !this.state.formSwitch
-  //   });
-  // };
-
-  // _getPropsForForm = () => {
-  //   const {
-  //     handleInputChange,
-  //     getFormElementValues,
-  //     togglePopupForms,
-  //     toggleValidAvailable
-  //   } = this;
-
-  //   const { submitResponse } = this.state;
-
-  //   return {
-  //     handleInputChange,
-  //     getFormElementValues,
-  //     togglePopupForms,
-  //     toggleValidAvailable,
-  //     submitResponse
-  //   };
-  // };
+  _togglePopupForms = event => {
+    // It changes the Signin and Signup popups
+    event.preventDefault();
+    this.setState({
+      formSwitch: !this.state.formSwitch
+    });
+  };
 
   render() {
-    // const { formSwitch } = this.state;
-    // const formProps = this._getPropsForForm();
+    const { formSwitch } = this.state;
+    const showForm = formSwitch
+      ? <Form render={(theProps) => (<FormSignup togglePopupForms={this._togglePopupForms} {...theProps} />)} />
+      : <Form render={(theProps) => (<FormSignin togglePopupForms={this._togglePopupForms} {...theProps} />)} />
     return (
-      <div className="wrapper">
-        <FormTest 
-          render={(theProps) => (
-            <FormSignup {...theProps} />
-          )}
-        />
-      </div>
+      <div className="wrapper">{showForm}</div>
     );
   }
 }
