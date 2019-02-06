@@ -6,12 +6,10 @@ import {
   InputEmail,
   FormSubmitButton,
   FormAdditional,
-	InputPasswordWithLink,
-	_getInputProps
+	InputPasswordWithLink
 } from "./FormComponents";
 
 const FormSignin = (props) => {
-	const inputComponentProps = _getInputProps(props);
   const {
     formID,
     togglePopupForms,
@@ -26,7 +24,7 @@ const FormSignin = (props) => {
         onSubmit={event => toggleValidAvailable(formID, event)}
       >
         <fieldset disabled={submitResponse}>
-          <FormTitle>Вход в систему</FormTitle>
+          {/* <FormTitle>Вход в систему</FormTitle>
           <InputEmail {...inputComponentProps} name="email">
             Электронная почта
           </InputEmail>
@@ -40,7 +38,7 @@ const FormSignin = (props) => {
             Зарегистрироваться
           </FormAdditional>
 
-          {submitResponse && <Loader />}
+          {submitResponse && <Loader />} */}
         </fieldset>
       </form>
     </div>

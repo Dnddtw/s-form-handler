@@ -12,47 +12,24 @@ const InputInvalidText = props => {
   return <p className="form__invalid"> {props.children} </p>;
 };
 
-export const _getInputProps = (props) => {
+const _getInputProps = (props) => {
   const {
-    formID,
-    handleInputChange,
-    value,
-    ifError,
-    getFormElementValues
-	} = props;
+    inputChangeHandler,
+    required = false,
+    name,
+    formName,
+    elementValues: { value, error }
+  } = props;
+  
+  const forName = `${formName}-${name}`;
 	
   return {
-    formID,
-    handleInputChange,
-    getFormElementValues,
-    value,
-    ifError
-  };
-}
-
-function _getElementValues(props) {
-  // The function gets properties from Form parent and resolve it with form components
-  const {
-    name,
-    value,
-    required = false,
-    inputChangeHandler
-  } = props;
-
-  const formElementData = getFormElementValues(formID, name);
-  const value = formElementData.value;
-  const ifError = formElementData.valueInvalid;
-
-  // const forName = `${formID}-${name}`;
-  const forName = `${name}`;
-
-  return {
+    inputChangeHandler,
     name,
     required,
-    inputChangeHandler,
-    value,
-    ifError,
-    forName
+    forName,
+    error,
+    value
   };
 }
 
@@ -62,11 +39,9 @@ export const InputEmail = props => {
     required,
     inputChangeHandler,
     value,
-    ifError,
+    error,
     forName
-  } = _getElementValues(props);
-
-  const ifError = false;
+  } = _getInputProps(props);
 
   return (
     <div className="form__element">
@@ -74,57 +49,55 @@ export const InputEmail = props => {
       <input
         type="text"
         onChange={event => inputChangeHandler({ name }, event)}
-        className={`form__input ${ifError ? "invalid" : ""}`}
-        id={forName}
-        required={required}
-        autoComplete="off"
-        name={name}
-        // value={value}
-      />
-      {ifError && <InputInvalidText>{ifError}</InputInvalidText>}
-    </div>
-  );
-};
-
-export const InputPassword = props => {
-  const {
-    formID,
-    name,
-    required,
-    handleInputChange,
-    value,
-    ifError,
-    forName
-  } = _getElementValues(props);
-
-  return (
-    <div className="form__element">
-      <FormLabel name={forName}> {props.children} </FormLabel>
-      <input
-        type="password"
-        className={`form__input ${ifError ? "invalid" : ""}`}
-        onChange={event => handleInputChange(formID, { name }, event)}
+        className={`form__input ${error ? "invalid" : ""}`}
         id={forName}
         required={required}
         autoComplete="off"
         name={name}
         value={value}
       />
-      {ifError && <InputInvalidText>{ifError}</InputInvalidText>}
+      {error && <InputInvalidText>{error}</InputInvalidText>}
+    </div>
+  );
+};
+
+export const InputPassword = props => {
+  const {
+    name,
+    required,
+    inputChangeHandler,
+    value,
+    error,
+    forName
+  } = _getInputProps(props);
+
+  return (
+    <div className="form__element">
+      <FormLabel name={forName}> {props.children} </FormLabel>
+      <input
+        type="password"
+        className={`form__input ${error ? "invalid" : ""}`}
+        onChange={event => inputChangeHandler({ name }, event)}
+        id={forName}
+        required={required}
+        autoComplete="off"
+        name={name}
+        value={value}
+      />
+      {error && <InputInvalidText>{error}</InputInvalidText>}
     </div>
   );
 };
 
 export const InputPasswordWithLink = props => {
   const {
-    formID,
     name,
     required,
-    handleInputChange,
+    inputChangeHandler,
     value,
-    ifError,
+    error,
     forName
-  } = _getElementValues(props);
+  } = _getInputProps(props);
 
   return (
     <div className="form__element">
@@ -136,32 +109,29 @@ export const InputPasswordWithLink = props => {
       </div>
       <input
         type="password"
-        className={`form__input ${ifError ? "invalid" : ""}`}
-        onChange={event => handleInputChange(formID, { name }, event)}
+        className={`form__input ${error ? "invalid" : ""}`}
+        onChange={event => inputChangeHandler({ name }, event)}
         id={forName}
         required={required}
         autoComplete="off"
         name={name}
         value={value}
       />
-      {ifError && <InputInvalidText>{ifError}</InputInvalidText>}
+      {error && <InputInvalidText>{error}</InputInvalidText>}
     </div>
   );
 };
 
 export const FormTitle = props => {
-  return <h1 className="form__title">{props.children}</h1>;
+  return <h1 className="form__title"> {props.children} </h1>;
 };
 
 export const FormSubmitButton = props => {
-  const { formID } = props;
-
   return (
     <div>
       <button
         type="submit"
-        className="form__submit"
-      >
+        className="form__submit">
         {props.children}
       </button>
     </div>
@@ -180,19 +150,21 @@ export const FormAdditional = props => {
 
 export const FormSelect = props => {
   const {
-    formID,
     name,
     required,
-    handleInputChange,
+    inputChangeHandler,
     value,
+    error,
     forName
-  } = _getElementValues(props);
+  } = _getInputProps(props);
 
   return (
     <div className="form__element">
       <FormLabel name={forName}> {props.children} </FormLabel>
       <ReactFlagsSelect 
         className="form__select form-select"
+        onChange={event => inputChangeHandler({name}, event)}
+        id={name}
         defaultCountry="UA"
       />
     </div>
@@ -201,13 +173,12 @@ export const FormSelect = props => {
 
 export const FormTermOfUse = props => {
   const {
-    formID,
     name,
     required,
-    handleInputChange,
+    inputChangeHandler,
     value,
     forName
-  } = _getElementValues(props);
+  } = _getInputProps(props);
 
   return (
     <div className="form__element checkbox">
@@ -219,7 +190,7 @@ export const FormTermOfUse = props => {
           id={forName}
           autoComplete="off"
           className="checkbox__checkbox"
-          onChange={event => handleInputChange(formID, { name }, event)}
+          onChange={event => inputChangeHandler({ name }, event)}
           value={value}
         />
         <span className="checkbox__checkmark" /> {props.children}
@@ -229,23 +200,22 @@ export const FormTermOfUse = props => {
 };
 
 const InputPropTypes = {
-	formID: string.isRequired,
 	name: string.isRequired,
 	handleInputChange: func.isRequired,
 	getFormElementValues: func.isRequired,
 	required: string
 }
 
-InputEmail.propTypes = { ...InputPropTypes };
-InputPassword.propTypes = { ...InputPropTypes };
-InputPasswordWithLink.propTypes = { ...InputPropTypes };
-FormSelect.propTypes = { ...InputPropTypes };
-FormTermOfUse.propTypes = { ...InputPropTypes };
+// InputEmail.propTypes = { ...InputPropTypes };
+// InputPassword.propTypes = { ...InputPropTypes };
+// InputPasswordWithLink.propTypes = { ...InputPropTypes };
+// FormSelect.propTypes = { ...InputPropTypes };
+// FormTermOfUse.propTypes = { ...InputPropTypes };
 
 FormSubmitButton.propTypes = {
-	formID: string.isRequired
+	// formID: string.isRequired
 };
 
 FormAdditional.propTypes = {
-	togglePopupForms: func.isRequired
+	// togglePopupForms: func.isRequired
 };

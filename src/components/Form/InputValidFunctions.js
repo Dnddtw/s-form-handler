@@ -14,3 +14,17 @@ export const validPassword = value => {
     // Valid function
     return value.length === 0 ? errorMessage.password.empty : "";
 };
+
+const validHandler = (name, value) => {
+    // General valid handler
+    switch (name) {
+      case "email":
+        return validEmail(value);
+				
+      case "password":
+      default:
+        return validPassword(value);
+    }
+};
+
+export default validHandler;

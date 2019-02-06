@@ -4,87 +4,94 @@ import Loader from "../Loader";
 import {
   FormTitle,
   InputEmail,
+  InputPassword,
   FormSubmitButton,
   FormAdditional,
-	InputPasswordWithLink,
-	_getInputProps
+  FormTermOfUse
 } from "./FormComponents";
 
-class FormSignup extends Component {
-	// const inputComponentProps = _getInputProps(props);
-  // const {
-  //   formID,
-  //   togglePopupForms,
-  //   submitResponse = true,
-  //   toggleValidAvailable
-  // } = props;
+const initialValues = {
+  submitResponse: false,
+  isValidAvailable: false,
+  email: { value: "", error: "" },
+  password: { value: "", error: "" },
+  repeatPassword: { value: "", error: "" },
+  citizenship: { value: "", error: "" },
+  termOfUse: { value: false, error: "" }
+};
 
-  state = {};
+class FormSignup extends Component {
+  state = {...initialValues};
 
   componentDidMount() {
-    console.log(this.state);
+    console.log(this.props);
   }
 
-  render() {
-    const { _handleInputChange } = this.props;
+  _handleInputChange = this.props._handleInputChange;
+  _toggleValidAvailable = this.props._toggleValidAvailable;
 
+  render() {
+    const { submitResponse, email, password, repeatPassword, citizenship, termOfUse } = this.state;
     return (
       <div className="form form__container">
         <form
           className="form__sign-up"
-          // onSubmit={this._toggleValidAvailable}
-        >
-          {/* <fieldset disabled={submitResponse}> */}
-          <fieldset>
+          onSubmit={this._toggleValidAvailable}>
+
+          <fieldset disabled={submitResponse}>
             <FormTitle>Регистрация в системе</FormTitle>
-            <InputEmail inputChangeHandler={_handleInputChange.bind(this)} required="required" name="email">
+
+            <InputEmail 
+              inputChangeHandler={this._handleInputChange} 
+              elementValues={email}
+              required="required" 
+              name="email">
               Электронная почта
             </InputEmail>
   
-            {/* <InputPassword
-              {...inputComponentProps}
+            <InputPassword
+              inputChangeHandler={this._handleInputChange}
+              elementValues={password}
               required="required"
-              name="password"
-            >
+              name="password">
               Пароль
             </InputPassword>
   
             <InputPassword
-              {...inputComponentProps}
+              inputChangeHandler={this._handleInputChange}
+              elementValues={repeatPassword}
               required="required"
-              name="repeatPassword"
-            >
+              name="repeatPassword">
               Повторите пароль
             </InputPassword>
   
-            <FormSelect
-              {...inputComponentProps}
+            {/* <FormSelect
+              inputChangeHandler={this._handleInputChange}
               required="required"
               name="citizenship"
             >
               Гражданство
-            </FormSelect>
+            </FormSelect> */}
   
             <FormTermOfUse
-              {...inputComponentProps}
+              inputChangeHandler={this._handleInputChange}
+              elementValues={termOfUse}
               required="required"
-              name="termOfUse"
-            >
-              Соглашаюсь с{" "}
+              name="termOfUse">
+              Соглашаюсь с
               <a href="#" className="text-blue">
                 правилами и условиями сервиса
               </a>
             </FormTermOfUse>
   
-            <FormSubmitButton formID={formID}>
-              {" "}
-              Зарегистрироваться{" "}
+            <FormSubmitButton>
+              Зарегистрироваться
             </FormSubmitButton>
-            <FormAdditional togglePopupForms={togglePopupForms}>
+            {/* <FormAdditional togglePopupForms={togglePopupForms}>
               Войти
             </FormAdditional> */}
   
-            {/* {submitResponse && <Loader />} */}
+            {submitResponse && <Loader />}
           </fieldset>
         </form>
       </div>

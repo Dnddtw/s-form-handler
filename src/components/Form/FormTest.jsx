@@ -1,15 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import FormPropTypes from './FormPropTypes';
-import Loader from "../Loader";
-import { validEmail, validPassword } from "./InputValidFunctions";
-
-import FormSignup from "./FormSignup";
+// import Loader from "../Loader";
+import validHandler from "./InputValidFunctions";
 
 class FormTest extends Component {
-  state = {
-    submitResponse: false,
-    isValidAvailable: false
-  };
+  state = {};
 
   _handleInputChange = (element, event) => {
     const target = event.target;
@@ -45,27 +40,18 @@ class FormTest extends Component {
       }, () => { this.onSubmitValidThisForm(id); });
   };
 
-  _validHandler (name, value) {
-    // General valid handler
-    switch (name) {
-      case "email":
-				return validEmail(value);
-				
-      case "password":
-      default:
-        return validPassword(value);
-    }
-  };
+  
 
   _gatherTheProps = () => {
     return ({
       _validHandler: this._validHandler,
-      _handleInputChange: this._handleInputChange
+      _handleInputChange: this._handleInputChange,
+      _toggleValidAvailable: this._toggleValidAvailable
     });
   } 
 
   render() {
-    const { submitResponse } = this.state;
+    console.log(this._gatherTheProps());
     return (
       <Fragment>
         {this.props.render(this._gatherTheProps())}
