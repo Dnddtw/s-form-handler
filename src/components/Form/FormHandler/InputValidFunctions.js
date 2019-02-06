@@ -1,4 +1,4 @@
-import errorMessage from '../../text/text.json';
+import errorMessage from '../../../text/text.json';
 
 export const validEmail = value => {
     // Valid function

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import FormPropTypes from './FormPropTypes';
-import Loader from "../Loader";
+// import FormPropTypes from '../../FormPropTypes';
+import Loader from "../../../Loader";
 import {
   FormTitle,
   InputEmail,
   FormSubmitButton,
   FormAdditional,
 	InputPasswordWithLink
-} from "./FormComponents";
+} from "../../FormComponents";
 
 const FormSignin = (props) => {
   const { handleInputChange, toggleValidAvailable } = props.functions;

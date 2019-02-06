@@ -1,7 +1,7 @@
 import React from "react";
-import { string, func } from 'prop-types';
 import ReactFlagsSelect from 'react-flags-select';
 import { Link } from 'react-router-dom';
+import { string, func } from 'prop-types';
 
 const FormLabel = props => {
   return (

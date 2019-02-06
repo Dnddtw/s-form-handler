@@ -1,6 +1,6 @@
 import React from 'react';
-import FormPropTypes from './FormPropTypes';
-import Loader from "../Loader";
+// import FormPropTypes from '../FormPropTypes';
+import Loader from "../../../Loader";
 import {
   FormTitle,
   InputEmail,
@@ -8,9 +8,9 @@ import {
   FormSubmitButton,
   FormAdditional,
   FormTermOfUse
-} from "./FormComponents";
+} from "../../FormComponents";
 
-const FormSignup = (props) => {
+const FormPattern = (props) => {
   const { handleInputChange, toggleValidAvailable } = props.functions;
   const { formURL } = props;
   const { 
@@ -82,4 +82,4 @@ const FormSignup = (props) => {
 };
 
 // FormSignup.propTypes = { ...FormPropTypes };
-export default FormSignup;
+export default FormPattern;

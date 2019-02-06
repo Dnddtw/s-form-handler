@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import validHandler from "./InputValidFunctions";
 
-class Form extends Component {
+class FormHandler extends Component {
   state = {
     ...this.props.initialFormValues,
     submitResponse: false,
@@ -96,4 +96,4 @@ class Form extends Component {
   }
 };
 
-export default Form;
+export default FormHandler;
