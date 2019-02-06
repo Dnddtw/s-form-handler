@@ -12,6 +12,7 @@ import {
 const FormSignin = (props) => {
   const { handleInputChange, toggleValidAvailable } = props.functions;
   const { submitResponse, email, password } = props.properties;
+  const { formURL } = props;
 
   return (
     <div className="form form__container">
@@ -37,7 +38,7 @@ const FormSignin = (props) => {
 
           <FormSubmitButton> Войти </FormSubmitButton>
 
-          <FormAdditional togglePopupForms={props.togglePopupForms}>
+          <FormAdditional formURL={formURL}>
             Зарегистрироваться
           </FormAdditional>
 

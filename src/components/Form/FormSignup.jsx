@@ -12,6 +12,7 @@ import {
 
 const FormSignup = (props) => {
   const { handleInputChange, toggleValidAvailable } = props.functions;
+  const { formURL } = props;
   const { 
     submitResponse, 
     email, 
@@ -69,7 +70,7 @@ const FormSignup = (props) => {
             Зарегистрироваться
           </FormSubmitButton>
 
-          <FormAdditional togglePopupForms={props.togglePopupForms}>
+          <FormAdditional formURL={formURL}>
             Войти
           </FormAdditional>
 

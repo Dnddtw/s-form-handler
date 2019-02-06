@@ -1,6 +1,7 @@
 import React from "react";
 import { string, func } from 'prop-types';
 import ReactFlagsSelect from 'react-flags-select';
+import { Link } from 'react-router-dom';
 
 const FormLabel = props => {
   return (
@@ -139,11 +140,11 @@ export const FormSubmitButton = props => {
 };
 
 export const FormAdditional = props => {
-  const { togglePopupForms } = props;
+  const { formURL } = props;
 
   return (
     <div className="popup__additional">
-      <button className="popup__link" onClick={togglePopupForms}> {props.children} </button>
+      <Link className="popup__link" to={formURL}> {props.children} </Link>
     </div>
   );
 };
