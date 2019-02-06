@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import FormContainer from "./Form";
+import FormContainer from "./Form/FormContainer";
 
 class App extends Component {
   render() {
     return (
       <div className="popup popup__container">
-        <Form />
+        <FormContainer />
       </div>
     );
   }

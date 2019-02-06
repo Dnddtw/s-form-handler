@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FormPropTypes from './FormPropTypes';
 import Loader from "../Loader";
 import {
@@ -10,82 +10,74 @@ import {
   FormTermOfUse
 } from "./FormComponents";
 
-const initialValues = {
-  submitResponse: false,
-  isValidAvailable: false,
-  email: { value: "", error: "", touched: false },
-  password: { value: "", error: "", touched: false },
-  repeatPassword: { value: "", error: "", touched: false },
-  citizenship: { value: "", error: "", touched: false },
-  termOfUse: { value: false, error: "", touched: false }
-};
+const FormSignup = (props) => {
+  const { handleInputChange, toggleValidAvailable } = props.functions;
+  const { 
+    submitResponse, 
+    email, 
+    password, 
+    repeatPassword, 
+    citizenship, 
+    termOfUse 
+  } = props.properties;
 
-class FormSignup extends Component {
-  state = { ...initialValues };
+  return (
+    <div className="form form__container">
+      <form
+        className="form__sign-up"
+        onSubmit={toggleValidAvailable}>
 
-  _handleInputChange = this.props_handleInputChange;
-  _toggleValidAvailable = this.props_toggleValidAvailable;
+        <fieldset disabled={submitResponse}>
+          <FormTitle>Регистрация в системе</FormTitle>
 
-  render() {
-    const { submitResponse, email, password, repeatPassword, citizenship, termOfUse } = this.state;
-    return (
-      <div className="form form__container">
-        <form
-          className="form__sign-up"
-          onSubmit={this._toggleValidAvailable}>
+          <InputEmail 
+            inputChangeHandler={handleInputChange} 
+            elementValues={email}
+            name="email">
+            Электронная почта
+          </InputEmail>
 
-          <fieldset disabled={submitResponse}>
-            <FormTitle>Регистрация в системе</FormTitle>
+          <InputPassword
+            inputChangeHandler={handleInputChange}
+            elementValues={password}
+            name="password">
+            Пароль
+          </InputPassword>
 
-            <InputEmail 
-              inputChangeHandler={this._handleInputChange} 
-              elementValues={email}
-              name="email">
-              Электронная почта
-            </InputEmail>
-  
-            <InputPassword
-              inputChangeHandler={this._handleInputChange}
-              elementValues={password}
-              name="password">
-              Пароль
-            </InputPassword>
-  
-            <InputPassword
-              inputChangeHandler={this._handleInputChange}
-              elementValues={repeatPassword}
-              name="repeatPassword">
-              Повторите пароль
-            </InputPassword>
-  
-            {/* <FormSelect
-              inputChangeHandler={this._handleInputChange}
-              name="citizenship"
-            >
-              Гражданство
-            </FormSelect> */}
-  
-            <FormTermOfUse
-              inputChangeHandler={this._handleInputChange}
-              elementValues={termOfUse}
-              name="termOfUse">
-              Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
-            </FormTermOfUse>
-  
-            <FormSubmitButton>
-              Зарегистрироваться
-            </FormSubmitButton>
+          <InputPassword
+            inputChangeHandler={handleInputChange}
+            elementValues={repeatPassword}
+            name="repeatPassword">
+            Повторите пароль
+          </InputPassword>
 
-            <FormAdditional togglePopupForms={this.props.togglePopupForms}>
-              Войти
-            </FormAdditional>
-  
-            {submitResponse && <Loader />}
-          </fieldset>
-        </form>
-      </div>
-    );
-  }
+          {/* <FormSelect
+            inputChangeHandler={handleInputChange}
+            name="citizenship"
+          >
+            Гражданство
+          </FormSelect> */}
+
+          <FormTermOfUse
+            inputChangeHandler={handleInputChange}
+            elementValues={termOfUse}
+            name="termOfUse">
+            Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
+          </FormTermOfUse>
+
+          <FormSubmitButton>
+            Зарегистрироваться
+          </FormSubmitButton>
+
+          <FormAdditional togglePopupForms={props.togglePopupForms}>
+            Войти
+          </FormAdditional>
+
+          {submitResponse && <Loader />}
+        </fieldset>
+      </form>
+    </div>
+  );
 };
 
 // FormSignup.propTypes = { ...FormPropTypes };

@@ -1,8 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import validHandler from "./InputValidFunctions";
 
-class FormTest extends Component {
-  state = {};
+class Form extends Component {
+  state = {
+    ...this.props.initialFormValues,
+    submitResponse: false,
+    isValidAvailable: false
+  };
 
   _handleInputChange (element, event) {
     const target = event.target;
@@ -29,20 +33,26 @@ class FormTest extends Component {
   };
 
   _gatherTheProps = () => {
+    console.log(this.props.initialFormValues);
     return ({
-      validHandler,
-      _handleInputChange: this._handleInputChange,
-      _toggleValidAvailable: this._toggleValidAvailable
+      functions: {
+        handleInputChange: this._handleInputChange,
+        toggleValidAvailable: this._toggleValidAvailable
+      },
+      properties: { ...this.props.initialFormValues }
     });
   } 
 
   render() {
+    const formProperties = this._gatherTheProps();
+
+    console.log(this.props.render);
     return (
       <Fragment>
-        {this.props.render(this._gatherTheProps())}
+        {this.props.children(formProperties)}
       </Fragment>
     );
   }
 };
 
-export default FormTest;
+export default Form;

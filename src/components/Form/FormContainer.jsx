@@ -3,16 +3,24 @@ import FormSignup from "./FormSignup";
 import FormSignin from "./FormSignin";
 import Form from "./Form";
 
+const initialSignupValues = {
+  email: { value: "", error: "", touched: false },
+  password: { value: "", error: "", touched: false },
+  repeatPassword: { value: "", error: "", touched: false },
+  citizenship: { value: "", error: "", touched: false },
+  termOfUse: { value: false, error: "", touched: false }
+};
+
+const initialSigninValues = {
+  submitResponse: false,
+  isValidAvailable: false,
+  email: { value: "", error: "", touched: "" },
+  password: { value: "", error: "", touched: "" }
+};
+
 class FormContainer extends Component {
   state = {
-    formSwitch: true,
-    // formsData: {
-    //   signin: {
-    //     isValidAvailable: false,
-    //     email: { value: "", valueInvalid: "" },
-    //     password: { value: "", valueInvalid: "" }
-    //   },
-    // }
+    formSwitch: true
   };
 
   // toggleValidAvailable = (event) => {
@@ -84,12 +92,30 @@ class FormContainer extends Component {
   render() {
     const { formSwitch } = this.state;
     const showForm = formSwitch
-      ? <Form render={(theProps) => (<FormSignup togglePopupForms={this._togglePopupForms} {...theProps} />)} />
-      : <Form render={(theProps) => (<FormSignin togglePopupForms={this._togglePopupForms} {...theProps} />)} />
+      ? (<Form>
+          {
+            (renderProps) => (
+              <FormSignup 
+                togglePopupForms={this._togglePopupForms} 
+                initialFormValues={initialSignupValues}
+                {...renderProps} />
+            )
+          }
+        </Form>)
+      : (<Form>
+          {
+            (renderProps) => (
+              <FormSignin 
+                togglePopupForms={this._togglePopupForms} 
+                initialFormValues={initialSigninValues}
+                {...renderProps} />
+            )
+          }
+        </Form>);
     return (
       <div className="wrapper">{showForm}</div>
     );
   }
 }
 
-export default Form;
+export default FormContainer;
