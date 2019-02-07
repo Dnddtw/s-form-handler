@@ -10,8 +10,6 @@ import {
   makeElementValuesInObject
 } from "../../FormComponents";
 
-
-
 const FormSignin = (props) => {
   const { functions, properties } = props;
   const { handleInputChange, onSubmitFormHandler } = functions;

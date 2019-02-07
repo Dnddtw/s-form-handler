@@ -15,18 +15,25 @@ export const validPassword = value => {
     return value.length === 0 ? errorMessage.password.empty : "";
 };
 
-
-
-const validHandler = (name, value) => {
-    // General valid handler
-    switch (name) {
-      case "email":
-        return validEmail(value);
-				
-      case "password":
-      default:
-        return validPassword(value);
+const validHandler = (name, value, validateScheme) => {
+    let flag = false;
+    
+    const some = validateScheme && validateScheme.hasOwnProperty(name);
+    if (some) {
+        validateScheme[name].some((fn) => {
+            const flaga = fn(value);
+            if (flaga) {
+                flag = flaga;
+            }
+            return flaga;
+        });
     }
+
+    return flag;
+
+
+
+    return false;
 };
 
 export default validHandler;

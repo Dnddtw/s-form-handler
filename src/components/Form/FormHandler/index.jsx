@@ -8,13 +8,15 @@ class FormHandler extends Component {
     isValidAvailable: false
   };
 
+  validateScheme = this.props.validateScheme || "";
+
   _handleInputChange = (element, event) => {
     const target = event.target;
 		const value = target.type === "checkbox" ? target.checked : target.value;
 		const { isValidAvailable } = this.state;
 		
     const { name } = element;
-    const error = isValidAvailable ? validHandler(name, value) : "";
+    const error = isValidAvailable ? validHandler(name, value, this.validateScheme) : "";
 
     this.setState((prevState) => ({
       values: { ...prevState.values, [name]: value },
@@ -35,7 +37,7 @@ class FormHandler extends Component {
     const values = this.state.values;
 
     for (let key in errors) {
-      errors[key] = validHandler(key, values[key]);
+      errors[key] = validHandler(key, values[key], this.validateScheme);
     }
 
     this.setState({
