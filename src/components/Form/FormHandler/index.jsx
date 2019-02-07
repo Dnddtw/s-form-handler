@@ -13,74 +13,62 @@ class FormHandler extends Component {
 		const value = target.type === "checkbox" ? target.checked : target.value;
 		const { isValidAvailable } = this.state;
 		
-    const name = element.name;
+    const { name } = element;
     const error = isValidAvailable ? validHandler(name, value) : "";
 
-    this.setState({
-      [name]: { value, error }
-    });
+    this.setState((prevState) => ({
+      values: { ...prevState.values, [name]: value },
+      touched: { ...prevState.touched, [name]: true },
+      errors: { ...prevState.errors, [name]: error }
+    }));
   };
 
-  _toggleValidAvailable = (event) => {
-    // It allows check the inputs changes in real time, when user clicked on submit button
+  _onSubmitFormHandler = (fn, event) => {
     event.preventDefault();
-    this.setState({
-        isValidAvailable: true
-    }, () => { this._onSubmitValidThisForm() });
-  };
 
-  _onSubmitValidThisForm = () => {
-    // The function replaces inputInvalid message (erros)
-    const state = this.state;
-
-    // It makes a new object with updated inputInvalid (errors)
-    Object.entries(state).forEach(([name, element]) => {
-      console.log(typeof element);
-      if (typeof element !== "object") { return; }
-      // if (name === "isValidAvailable") {
-      //   validedData[name] = element;
-      // } else {
-        element.error = validHandler(name, element.value);
-        // Object.assign(validedData, { [name]: element });
-      // }
-    });
-
-    // It replaces previous formsData[id] with new
-    // this.setState(
-    //   {
-    //     formsData: {
-    //       ...formsData,
-    //       [id]: validedData
-    //     }
-    //   }, () => { this.fakeSubmitLoading(id); });
-  };
-
-  _fakeSubmitLoading = () => {
-    const state = this.state;
-    const canIChangeSubmitResponseState = Object.entries(state).filter((stateEntry) => {
-        if (typeof stateEntry !== "object") { return false; }
-        return stateEntry.error;
-      }
-    );
-
-    if (canIChangeSubmitResponseState.length === 0) {
-      this.setState({ submitResponse: true },
-        () => {
-          setTimeout(() => {
-            this.setState({
-              submitResponse: false
-            });
-          }, 2500);
-        }
-      );
+    if (typeof fn !== "function") {
+      throw Error('The callback of onSubmitFormHandler is not function');
     }
+
+    // The function replaces inputInvalid message (erros)
+    const errors = Object.assign({}, this.state.errors);
+    const values = this.state.values;
+
+    for (let key in errors) {
+      errors[key] = validHandler(key, values[key]);
+    }
+
+    this.setState({
+      isValidAvailable: true, 
+      errors
+    }, () => { fn.call(this) });
   };
+
+  // _fakeSubmitLoading = () => {
+  //   const { errors } = this.state;
+    
+  //   const canIChangeSubmitResponseState = Object.keys(errors).filter((element) => {
+  //     return errors[element];
+  //   });
+
+  //   if (canIChangeSubmitResponseState.length === 0) {
+  //     this.setState({ submitResponse: true },
+  //       () => {
+  //         setTimeout(() => {
+  //           this.setState({
+  //             submitResponse: false
+  //           });
+  //         }, 10000);
+  //       }
+  //     );
+  //   }
+  // };
 
   _gatherTheProps = () => {
     return ({
       functions: {
         handleInputChange: this._handleInputChange,
-        toggleValidAvailable: this._toggleValidAvailable
+        onSubmitFormHandler: this._onSubmitFormHandler
       },
       properties: { ...this.state }
     });

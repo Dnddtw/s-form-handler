@@ -7,26 +7,28 @@ import {
   InputPassword,
   FormSubmitButton,
   FormAdditional,
-  FormTermOfUse
+  FormTermOfUse,
+  makeElementValuesInObject
 } from "../../FormComponents";
 
 const FormPattern = (props) => {
-  const { handleInputChange, toggleValidAvailable } = props.functions;
-  const { formURL } = props;
+  const { functions, properties } = props;
+  const { handleInputChange, onSubmitFormHandler } = functions;
+  const { submitResponse } = properties;
+
   const { 
-    submitResponse, 
     email, 
     password, 
     repeatPassword, 
     citizenship, 
     termOfUse 
-  } = props.properties;
+  } = makeElementValuesInObject(properties);
 
   return (
     <div className="form form__container">
       <form
         className="form__sign-up"
-        onSubmit={toggleValidAvailable}>
+        onSubmit={(event) => onSubmitFormHandler(props.onSubmitFunction, event)}>
 
         <fieldset disabled={submitResponse}>
           <FormTitle>Регистрация в системе</FormTitle>
@@ -62,6 +64,7 @@ const FormPattern = (props) => {
           <FormTermOfUse
             inputChangeHandler={handleInputChange}
             elementValues={termOfUse}
+            required="required"
             name="termOfUse">
             Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
           </FormTermOfUse>
@@ -70,7 +73,7 @@ const FormPattern = (props) => {
             Зарегистрироваться
           </FormSubmitButton>
 
-          <FormAdditional formURL={formURL}>
+          <FormAdditional formURL="/login">
             Войти
           </FormAdditional>
 

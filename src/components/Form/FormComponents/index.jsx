@@ -3,6 +3,17 @@ import ReactFlagsSelect from 'react-flags-select';
 import { Link } from 'react-router-dom';
 import { string, func } from 'prop-types';
 
+export const makeElementValuesInObject = (state) => {
+  const bar = {};
+  for (let key in state.values) {
+    bar[key] = {
+      value: state.values[key],
+      error: state.errors[key]
+    };
+  }
+  return bar;
+};
+
 const FormLabel = props => {
   return (
     <label htmlFor={`${props.name}`} className="form__label"> {props.children} </label>

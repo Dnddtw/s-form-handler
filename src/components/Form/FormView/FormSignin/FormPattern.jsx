@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import FormPropTypes from '../../FormPropTypes';
 import Loader from "../../../Loader";
 import {
@@ -6,19 +6,24 @@ import {
   InputEmail,
   FormSubmitButton,
   FormAdditional,
-	InputPasswordWithLink
+  InputPasswordWithLink,
+  makeElementValuesInObject
 } from "../../FormComponents";
 
+
+
 const FormSignin = (props) => {
-  const { handleInputChange, toggleValidAvailable } = props.functions;
-  const { submitResponse, email, password } = props.properties;
-  const { formURL } = props;
+  const { functions, properties } = props;
+  const { handleInputChange, onSubmitFormHandler } = functions;
+  const { submitResponse } = properties;
+
+  const { email, password } = makeElementValuesInObject(properties);
 
   return (
     <div className="form form__container">
       <form
         className="form__sign-in"
-        onSubmit={toggleValidAvailable}>
+        onSubmit={(event) => onSubmitFormHandler(props.onSubmitFunction, event)}>
         <fieldset disabled={submitResponse}>
           <FormTitle>Вход в систему</FormTitle>
 
@@ -38,7 +43,7 @@ const FormSignin = (props) => {
 
           <FormSubmitButton> Войти </FormSubmitButton>
 
-          <FormAdditional formURL={formURL}>
+          <FormAdditional formURL="/register">
             Зарегистрироваться
           </FormAdditional>
 

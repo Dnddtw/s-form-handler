@@ -15,6 +15,8 @@ export const validPassword = value => {
     return value.length === 0 ? errorMessage.password.empty : "";
 };
 
+
+
 const validHandler = (name, value) => {
     // General valid handler
     switch (name) {

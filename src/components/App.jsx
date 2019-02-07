@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Form from "./Form/FormHandler";
 import FormSignin from "./Form/FormView/FormSignin";
 import FormSignup from "./Form/FormView/FormSignup";
 
