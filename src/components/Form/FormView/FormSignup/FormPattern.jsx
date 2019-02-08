@@ -1,8 +1,7 @@
 import React from 'react';
-// import FormPropTypes from '../FormPropTypes';
+import { object } from 'prop-types';
 import Loader from "../../../Loader";
 import {
-  FormTitle,
   Input,
   FormSubmitButton,
   FormCountrySelect,
@@ -19,10 +18,10 @@ const FormPattern = (props) => {
     <div className="form form__container">
       <form
         className="form__sign-up"
-        onSubmit={(event) => onSubmitFormHandler(props.onSubmitFunction, event)}>
+        onSubmit={onSubmitFormHandler}>
 
         <fieldset disabled={submitResponse}>
-          <FormTitle>Регистрация в системе</FormTitle>
+          <h1 className="form__title">Регистрация в системе</h1>
 
           <Input 
             inputChangeHandler={handleInputChange} 
@@ -68,13 +67,11 @@ const FormPattern = (props) => {
             Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
           </FormCheckbox>
 
-          <FormSubmitButton>
-            Зарегистрироваться
-          </FormSubmitButton>
+          <div>
+            <FormSubmitButton>Зарегистрироваться</FormSubmitButton>
+          </div>
 
-          <FormAdditional formURL="/login">
-            Войти
-          </FormAdditional>
+          <FormAdditional formURL="/login">Войти</FormAdditional>
 
           {submitResponse && <Loader />}
         </fieldset>
@@ -83,5 +80,11 @@ const FormPattern = (props) => {
   );
 };
 
-// FormSignup.propTypes = { ...FormPropTypes };
+FormPattern.propTypes = {
+  properties: object.isRequired,
+  functions: object.isRequired
+};
+
+FormPattern.defaultProps = {};
+
 export default FormPattern;

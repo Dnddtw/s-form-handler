@@ -4,38 +4,17 @@ import FormHandler from '../../FormHandler';
 import { validEmail, validPassword, fieldRequired } from '../../FormHandler/InputValidFunctions';
 
 const initialSigninValues = {
-    values: {
-      email: "",
-      password: ""
-    },
-    errors: {
-      email: "",
-      password: "",
-    },
-    touched: {
-      email: false,
-      password: false
-    }
+  values: {
+    email: "",
+    password: ""
+  }
 };
 
-function _fakeSubmitLoading () {
-  const { errors } = this.state;
-  
-  const canIChangeSubmitResponseState = Object.keys(errors).filter((element) => {
-    return errors[element];
-  });
-
-  if (canIChangeSubmitResponseState.length === 0) {
-    this.setState({ submitResponse: true },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            submitResponse: false
-          });
-        }, 10000);
-      }
-    );
-  }
+function _fakeSubmitLoading (fn) {
+  fn(true);
+  setTimeout(() => {
+    fn(false);
+  }, 1000);
 };
 
 const validateScheme = {
@@ -47,10 +26,11 @@ const FormSignin = () => {
   return (
     <FormHandler 
       validateScheme={validateScheme}
-      initialFormValues={initialSigninValues}>
+      initialFormValues={initialSigninValues}
+      onSubmitFunction={_fakeSubmitLoading}
+    >
       {(renderProps) => (
           <FormPattern 
-            onSubmitFunction={_fakeSubmitLoading}
             {...renderProps} />
       )}
     </FormHandler>

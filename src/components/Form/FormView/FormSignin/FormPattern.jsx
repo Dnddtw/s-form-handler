@@ -1,28 +1,25 @@
 import React from 'react';
-// import FormPropTypes from '../../FormPropTypes';
+import { object } from 'prop-types';
 import Loader from "../../../Loader";
 import {
-  FormTitle,
   Input,
   FormSubmitButton,
   FormAdditional,
 } from "../../FormComponents";
 
 const FormSignin = (props) => {
-  const { functions, properties, onSubmitFunction } = props;
+  const { functions, properties } = props;
   const { handleInputChange, onSubmitFormHandler } = functions;
   const { submitResponse, errors, values } = properties;
-
-  console.log(errors);
 
   return (
     <div className="form form__container">
       <form
         className="form__sign-in"
-        onSubmit={(event) => onSubmitFormHandler(onSubmitFunction, event)}
+        onSubmit={onSubmitFormHandler}
       >
         <fieldset disabled={submitResponse}>
-          <FormTitle>Вход в систему</FormTitle>
+          <h1 className="form__title">Вход в систему</h1>
 
           <Input 
             inputChangeHandler={handleInputChange} 
@@ -42,11 +39,11 @@ const FormSignin = (props) => {
             Пароль
           </Input>
 
-          <FormSubmitButton> Войти </FormSubmitButton>
+          <div>
+            <FormSubmitButton>Войти</FormSubmitButton>
+          </div>
 
-          <FormAdditional formURL="/register">
-            Зарегистрироваться
-          </FormAdditional>
+          <FormAdditional formURL="/register">Зарегистрироваться</FormAdditional>
 
           {submitResponse && <Loader />}
         </fieldset>
@@ -55,5 +52,11 @@ const FormSignin = (props) => {
   );
 };
 
-// FormSignin.propTypes = { ...FormPropTypes };
+FormSignin.propTypes = {
+  properties: object.isRequired,
+  functions: object.isRequired
+};
+
+FormSignin.defaultProps = {};
+
 export default FormSignin;

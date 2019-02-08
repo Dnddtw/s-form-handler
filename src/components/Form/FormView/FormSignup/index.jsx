@@ -9,7 +9,7 @@ const initialSignupValues = {
     password: "",
     repeatPassword: "",
     citizenship: "",
-    termOfUse: ""
+    termOfUse: true
   },
   errors: {
     email: "",
@@ -17,33 +17,16 @@ const initialSignupValues = {
     repeatPassword: "",
     citizenship: "",
     termOfUse: ""
-  },
-  touched: {
-    email: false,
-    password: false,
-    repeatPassword: false,
-    citizenship: false
   }
 };
 
-function _fakeSubmitLoading () {
-  const { errors } = this.state;
-  
-  const canIChangeSubmitResponseState = Object.keys(errors).filter((element) => {
-    return errors[element];
-  });
 
-  if (canIChangeSubmitResponseState.length === 0) {
-    this.setState({ submitResponse: true },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            submitResponse: false
-          });
-        }, 10000);
-      }
-    );
-  }
+
+function _fakeSubmitLoading (fn) {
+  fn(true);
+  setTimeout(() => {
+    fn(false);
+  }, 1000);
 };
 
 const validateScheme = {
@@ -57,10 +40,10 @@ const FormSignup = () => {
   return (
     <FormHandler 
       validateScheme={validateScheme}
+      onSubmitFunction={_fakeSubmitLoading}
       initialFormValues={initialSignupValues}>
       {(renderProps) => (
           <FormPattern 
-            onSubmitFunction={_fakeSubmitLoading}
             {...renderProps} />
       )}
     </FormHandler>

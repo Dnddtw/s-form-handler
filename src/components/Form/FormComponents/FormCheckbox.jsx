@@ -1,9 +1,10 @@
 import React from 'react';
+import { string, func, bool } from 'prop-types';
 
 const FormCheckbox = props => {
     const {
       name,
-      required = false,
+      required,
       inputChangeHandler,
       value
     } = props;
@@ -13,9 +14,9 @@ const FormCheckbox = props => {
         <label htmlFor={name} className="checkbox__label">
           <input
             className="checkbox__checkbox"
-            onChange={event => inputChangeHandler({ name }, event)}
+            onChange={inputChangeHandler}
             id={name}
-            value={value}
+            checked={value}
             required={required}
             name={name}
             type="checkbox"
@@ -24,6 +25,17 @@ const FormCheckbox = props => {
         </label>
       </div>
     );
+};
+
+FormCheckbox.propTypes = {
+  inputChangeHandler: func.isRequired,
+  value: bool,
+  name: string
+};
+
+FormCheckbox.defaultProps = {
+  required: false,
+  value: true
 };
 
 export default FormCheckbox;

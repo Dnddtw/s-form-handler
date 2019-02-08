@@ -17,21 +17,14 @@ export const validPassword = value => {
 
 export const fieldRequired = value => (value.length === 0 ? errorMessage.required : "");
 
-const validHandler = (name, value, validateScheme) => {
-    let flag = false;
-    
-    const some = validateScheme && validateScheme.hasOwnProperty(name);
-    if (some) {
-        validateScheme[name].some((fn) => {
-            const flaga = fn(value);
-            if (flaga && !flag) {
-                flag = flaga;
-            }
-            return flaga;
-        });
+const validHandler = (value, validateScheme) => {  
+    if (!validateScheme) { return false; }
+    for (let i = 0; i < validateScheme.length; i++ ) {
+        const error = validateScheme[i](value);
+        if (error) { return error }
     }
 
-    return flag;
+    return false;
 };
 
 export default validHandler;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, func, any } from 'prop-types';
 import ReactFlagsSelect from 'react-flags-select';
 
 import FormLabel from './FormLabel';
@@ -17,13 +18,26 @@ const FormCountrySelect = props => {
         <FormLabel name={name}>{props.children}</FormLabel>
         <ReactFlagsSelect 
           className={`form__select form-select ${error ? "invalid" : ""}`}
-          onSelect={event => inputChangeHandler({name}, event)}
+          onSelect={inputChangeHandler}
           id={name}
           placeholder={placeholder}
         />
         {error && <InvalidInfo>{error}</InvalidInfo>}
       </div>
     );
+};
+
+FormCountrySelect.propTypes = {
+  name: string,
+  inputChangeHandler: func.isRequired,
+  placeholder: string,
+  error: any
+};
+
+FormCountrySelect.defaultProps = {
+  error: "",
+  name: "citizenship",
+  placeholder: ""
 };
 
 export default FormCountrySelect;

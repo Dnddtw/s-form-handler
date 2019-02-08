@@ -1,16 +1,23 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import { object, func } from 'prop-types';
+
 import validHandler from "./InputValidFunctions";
 
 class FormHandler extends Component {
+  validateScheme = this.props.validateScheme;
+  onSubmitFunction = this.props.onSubmitFunction;
+
   state = {
-    ...this.props.initialFormValues,
+    values: {
+      ...this.props.initialFormValues.values,
+    },
+    errors: {},
+    touched: {},
     submitResponse: false,
     isValidAvailable: false
   };
 
-  validateScheme = this.props.validateScheme || [];
-
-  _handleInputChange = (element, event) => {
+  _handleInputChange = (event) => {
     const { isValidAvailable } = this.state;
     const target = typeof event === "string" ? "country" : event.target;
     const value = target === "country" 
@@ -19,8 +26,8 @@ class FormHandler extends Component {
         ? target.checked 
         : target.value;
 		
-    const { name } = element;
-    const error = isValidAvailable ? validHandler(name, value, this.validateScheme) : "";
+    const name = typeof target === "object" ? event.target.name : "citizenship" ;
+    const error = isValidAvailable ? validHandler(value, this.validateScheme[name]) : "";
 
     this.setState((prevState) => ({
       values: { ...prevState.values, [name]: value },
@@ -29,26 +36,33 @@ class FormHandler extends Component {
     }));
   };
 
-  _onSubmitFormHandler = (fn, event) => {
+  _onSubmitFormHandler = (event) => {
     event.preventDefault();
-
-    if (typeof fn !== "function") {
-      throw Error('The callback of onSubmitFormHandler is not function');
-    }
 
     // The function replaces inputInvalid message (erros)
     const errors = Object.assign({}, this.state.errors);
     const values = this.state.values;
 
-    for (let key in errors) {
-      errors[key] = validHandler(key, values[key], this.validateScheme);
+    for (let key in values) {
+      errors[key] = validHandler(values[key], this.validateScheme[key]);
     }
 
     this.setState({
       isValidAvailable: true, 
       errors
-    }, () => { fn.call(this) });
+    }, () => { 
+      const { errors } = this.state;
+      const canIChangeSubmitResponseState = Object.keys(errors).filter((element) => {
+        return errors[element];
+      });
+
+      if (canIChangeSubmitResponseState) { this.onSubmitFunction(this._setSubmitResponse) } 
+    });
   };
+
+  _setSubmitResponse = (submitResponse = false) => {
+    this.setState({ submitResponse })
+  }
 
   // _fakeSubmitLoading = () => {
   //   const { errors } = this.state;
@@ -71,23 +85,37 @@ class FormHandler extends Component {
   // };
 
   _gatherTheProps = () => {
+    const { values, errors } = this.state;
+    const properties = { values, errors };
     return ({
       functions: {
         handleInputChange: this._handleInputChange,
         onSubmitFormHandler: this._onSubmitFormHandler
       },
-      properties: { ...this.state }
+      properties
     });
   } 
 
   render() {
     const formProperties = this._gatherTheProps();
     return (
-      <Fragment>
+      <>
         {this.props.children(formProperties)}
-      </Fragment>
+      </>
     );
   }
+};
+
+FormHandler.propTypes = {
+  validateScheme: object,
+  initialFormValues: object.isRequired,
+  onSubmitFunction: func.isRequired,
+};
+
+FormHandler.defaultProps = {
+  validateScheme: {},
+  submitResponse: false,
+  isValidAvailable: false
 };
 
 export default FormHandler;

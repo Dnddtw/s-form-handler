@@ -1,4 +1,6 @@
 import React from 'react';
+import { string, any, func } from 'prop-types';
+
 import FormLabel from './FormLabel';
 import InvalidInfo from './InvalidInfo';
 
@@ -15,7 +17,7 @@ const Input = (props) => {
         <div className="form__element">
             <FormLabel name={name}>{props.children}</FormLabel>
             <input
-                onChange={event => inputChangeHandler({ name }, event)}
+                onChange={inputChangeHandler}
                 className={`form__input ${error ? "invalid" : ""}`}
                 id={name}
                 autoComplete="off"
@@ -26,6 +28,19 @@ const Input = (props) => {
             {error && <InvalidInfo>{error}</InvalidInfo>}
         </div>
     );
+};
+
+Input.defaultProps = {
+    value: "",
+    error: ""
+};
+
+Input.propTypes = {
+    type: string.isRequired,
+    value: any.isRequired,
+    name: string,
+    inputChangeHandler: func.isRequired,
+    error: any
 };
 
 export default Input;
