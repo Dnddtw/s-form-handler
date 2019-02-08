@@ -3,26 +3,16 @@ import React from 'react';
 import Loader from "../../../Loader";
 import {
   FormTitle,
-  InputEmail,
-  InputPassword,
+  Input,
   FormSubmitButton,
   FormAdditional,
-  FormTermOfUse,
-  makeElementValuesInObject
+  FormCheckbox
 } from "../../FormComponents";
 
 const FormPattern = (props) => {
   const { functions, properties } = props;
   const { handleInputChange, onSubmitFormHandler } = functions;
-  const { submitResponse } = properties;
-
-  const { 
-    email, 
-    password, 
-    repeatPassword, 
-    citizenship, 
-    termOfUse 
-  } = makeElementValuesInObject(properties);
+  const { submitResponse, errors, values } = properties;
 
   return (
     <div className="form form__container">
@@ -33,26 +23,33 @@ const FormPattern = (props) => {
         <fieldset disabled={submitResponse}>
           <FormTitle>Регистрация в системе</FormTitle>
 
-          <InputEmail 
+          <Input 
             inputChangeHandler={handleInputChange} 
-            elementValues={email}
-            name="email">
+            value={values.value}
+            error={errors.error}
+            name="email"
+            type="email">
             Электронная почта
-          </InputEmail>
+          </Input>
 
-          <InputPassword
+          <Input
             inputChangeHandler={handleInputChange}
-            elementValues={password}
-            name="password">
+            value={values.value}
+            error={errors.error}
+            name="password"
+            type="password"
+            >
             Пароль
-          </InputPassword>
+          </Input>
 
-          <InputPassword
+          <Input
             inputChangeHandler={handleInputChange}
-            elementValues={repeatPassword}
-            name="repeatPassword">
+            value={values.value}
+            error={errors.error}
+            name="repeatPassword"
+            type="password">
             Повторите пароль
-          </InputPassword>
+          </Input>
 
           {/* <FormSelect
             inputChangeHandler={handleInputChange}
@@ -61,13 +58,14 @@ const FormPattern = (props) => {
             Гражданство
           </FormSelect> */}
 
-          <FormTermOfUse
+          <FormCheckbox
             inputChangeHandler={handleInputChange}
-            elementValues={termOfUse}
+            value={values.value}
+            error={errors.error}
             required="required"
             name="termOfUse">
             Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>
-          </FormTermOfUse>
+          </FormCheckbox>
 
           <FormSubmitButton>
             Зарегистрироваться

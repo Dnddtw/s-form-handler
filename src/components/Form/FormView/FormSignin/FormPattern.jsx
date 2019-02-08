@@ -3,41 +3,42 @@ import React from 'react';
 import Loader from "../../../Loader";
 import {
   FormTitle,
-  InputEmail,
+  Input,
   FormSubmitButton,
   FormAdditional,
-  InputPasswordWithLink,
-  makeElementValuesInObject
 } from "../../FormComponents";
 
 const FormSignin = (props) => {
-  const { functions, properties } = props;
+  const { functions, properties, onSubmitFunction } = props;
   const { handleInputChange, onSubmitFormHandler } = functions;
-  const { submitResponse } = properties;
-
-  const { email, password } = makeElementValuesInObject(properties);
+  const { submitResponse, errors, values } = properties;
 
   return (
     <div className="form form__container">
       <form
         className="form__sign-in"
-        onSubmit={(event) => onSubmitFormHandler(props.onSubmitFunction, event)}>
+        onSubmit={(event) => onSubmitFormHandler(onSubmitFunction, event)}
+      >
         <fieldset disabled={submitResponse}>
           <FormTitle>Вход в систему</FormTitle>
 
-          <InputEmail 
+          <Input 
             inputChangeHandler={handleInputChange} 
-            elementValues={email}
-            name="email">
+            value={values.value}
+            error={errors.error}
+            name="email"
+            type="email">
             Электронная почта
-          </InputEmail>
+          </Input>
 
-          <InputPasswordWithLink 
+          <Input 
             inputChangeHandler={handleInputChange} 
-            elementValues={password}
-            name="password">
+            value={values.value}
+            error={errors.error}
+            name="password"
+            type="password">
             Пароль
-          </InputPasswordWithLink>
+          </Input>
 
           <FormSubmitButton> Войти </FormSubmitButton>
 

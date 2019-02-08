@@ -1,7 +1,7 @@
 import React from 'react';
 import FormPattern from './FormPattern';
 import FormHandler from '../../FormHandler';
-import { validEmail, validPassword } from '../../FormHandler/InputValidFunctions';
+import { validEmail, validPassword, fieldRequired } from '../../FormHandler/InputValidFunctions';
 
 const initialSigninValues = {
     values: {
@@ -39,8 +39,8 @@ function _fakeSubmitLoading () {
 };
 
 const validateScheme = {
-  email: [validEmail],
-  password: [validPassword]
+  email: [validEmail, fieldRequired],
+  password: [validPassword, fieldRequired]
 };
 
 const FormSignin = () => {

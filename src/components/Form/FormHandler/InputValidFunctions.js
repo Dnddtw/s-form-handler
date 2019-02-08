@@ -15,6 +15,8 @@ export const validPassword = value => {
     return value.length === 0 ? errorMessage.password.empty : "";
 };
 
+export const fieldRequired = value => (value.length === 0 ? errorMessage.required : "");
+
 const validHandler = (name, value, validateScheme) => {
     let flag = false;
     
@@ -22,7 +24,7 @@ const validHandler = (name, value, validateScheme) => {
     if (some) {
         validateScheme[name].some((fn) => {
             const flaga = fn(value);
-            if (flaga) {
+            if (flaga && !flag) {
                 flag = flaga;
             }
             return flaga;
@@ -30,10 +32,6 @@ const validHandler = (name, value, validateScheme) => {
     }
 
     return flag;
-
-
-
-    return false;
 };
 
 export default validHandler;

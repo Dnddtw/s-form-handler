@@ -8,7 +8,7 @@ class FormHandler extends Component {
     isValidAvailable: false
   };
 
-  validateScheme = this.props.validateScheme || "";
+  validateScheme = this.props.validateScheme || [];
 
   _handleInputChange = (element, event) => {
     const target = event.target;
