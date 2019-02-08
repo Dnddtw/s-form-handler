@@ -13,6 +13,8 @@ const FormSignin = (props) => {
   const { handleInputChange, onSubmitFormHandler } = functions;
   const { submitResponse, errors, values } = properties;
 
+  console.log(errors);
+
   return (
     <div className="form form__container">
       <form
@@ -24,8 +26,8 @@ const FormSignin = (props) => {
 
           <Input 
             inputChangeHandler={handleInputChange} 
-            value={values.value}
-            error={errors.error}
+            value={values.email}
+            error={errors.email}
             name="email"
             type="email">
             Электронная почта
@@ -33,8 +35,8 @@ const FormSignin = (props) => {
 
           <Input 
             inputChangeHandler={handleInputChange} 
-            value={values.value}
-            error={errors.error}
+            value={values.password}
+            error={errors.password}
             name="password"
             type="password">
             Пароль

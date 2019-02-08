@@ -2,6 +2,7 @@ import { string, func } from 'prop-types';
 import Input from './Input';
 import FormAdditional from './FormAdditional';
 import FormSubmitButton from './FormSubmitButton';
+import FormCountrySelect from './FormCountrySelect';
 import FormTitle from './FormTitle';
 import FormCheckbox from './FormCheckbox';
 
@@ -62,6 +63,7 @@ FormAdditional.propTypes = {
 export { 
   Input, 
   FormSubmitButton, 
+  FormCountrySelect,
   FormTitle, 
   FormAdditional, 
   FormCheckbox 

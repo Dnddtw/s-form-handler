@@ -8,6 +8,7 @@ const FormCountrySelect = props => {
     const {
       name,
       inputChangeHandler,
+      placeholder,
       error,
     } = props;
   
@@ -15,12 +16,12 @@ const FormCountrySelect = props => {
       <div className="form__element">
         <FormLabel name={name}>{props.children}</FormLabel>
         <ReactFlagsSelect 
-          className="form__select form-select"
-          onChange={event => inputChangeHandler({name}, event)}
+          className={`form__select form-select ${error ? "invalid" : ""}`}
+          onSelect={event => inputChangeHandler({name}, event)}
           id={name}
-          defaultCountry="UA"
+          placeholder={placeholder}
         />
-        {error && <InvalidInfo error />}
+        {error && <InvalidInfo>{error}</InvalidInfo>}
       </div>
     );
 };

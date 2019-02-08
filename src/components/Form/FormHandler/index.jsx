@@ -11,9 +11,13 @@ class FormHandler extends Component {
   validateScheme = this.props.validateScheme || [];
 
   _handleInputChange = (element, event) => {
-    const target = event.target;
-		const value = target.type === "checkbox" ? target.checked : target.value;
-		const { isValidAvailable } = this.state;
+    const { isValidAvailable } = this.state;
+    const target = typeof event === "string" ? "country" : event.target;
+    const value = target === "country" 
+      ? event 
+      : target.type === "checkbox" 
+        ? target.checked 
+        : target.value;
 		
     const { name } = element;
     const error = isValidAvailable ? validHandler(name, value, this.validateScheme) : "";

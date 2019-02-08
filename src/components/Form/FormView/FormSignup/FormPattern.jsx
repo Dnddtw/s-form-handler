@@ -5,6 +5,7 @@ import {
   FormTitle,
   Input,
   FormSubmitButton,
+  FormCountrySelect,
   FormAdditional,
   FormCheckbox
 } from "../../FormComponents";
@@ -25,8 +26,8 @@ const FormPattern = (props) => {
 
           <Input 
             inputChangeHandler={handleInputChange} 
-            value={values.value}
-            error={errors.error}
+            value={values.email}
+            error={errors.email}
             name="email"
             type="email">
             Электронная почта
@@ -34,8 +35,8 @@ const FormPattern = (props) => {
 
           <Input
             inputChangeHandler={handleInputChange}
-            value={values.value}
-            error={errors.error}
+            value={values.password}
+            error={errors.password}
             name="password"
             type="password"
             >
@@ -44,24 +45,24 @@ const FormPattern = (props) => {
 
           <Input
             inputChangeHandler={handleInputChange}
-            value={values.value}
-            error={errors.error}
+            value={values.repeatPassword}
+            error={errors.repeatPassword}
             name="repeatPassword"
             type="password">
             Повторите пароль
           </Input>
 
-          {/* <FormSelect
+          <FormCountrySelect
             inputChangeHandler={handleInputChange}
             name="citizenship"
-          >
+            placeholder="Выберите гражданство"
+            error={errors.citizenship}>
             Гражданство
-          </FormSelect> */}
+          </FormCountrySelect>
 
           <FormCheckbox
             inputChangeHandler={handleInputChange}
-            value={values.value}
-            error={errors.error}
+            value={values.termOfUse}
             required="required"
             name="termOfUse">
             Соглашаюсь с <a href="#" className="text-blue">правилами и условиями сервиса</a>

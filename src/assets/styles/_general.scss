@@ -23,6 +23,11 @@
         pointer-events: none;
     }
 
+    &.invalid {
+        border-color: $color-invalid;
+        background-color: rgba($color-invalid, 0.15);
+    }
+
     .selected--flag--option {
         height: 100%;
         display: flex;

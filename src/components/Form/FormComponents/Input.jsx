@@ -23,7 +23,7 @@ const Input = (props) => {
                 name={name}
                 value={value}
             />
-            {error && <InvalidInfo error />}
+            {error && <InvalidInfo>{error}</InvalidInfo>}
         </div>
     );
 };
