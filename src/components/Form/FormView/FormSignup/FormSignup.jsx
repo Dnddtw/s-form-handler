@@ -6,23 +6,11 @@ import { validEmail, validPassword, fieldRequired } from '../../FormHandler/Inpu
 const initialSignupValues = {
   values: {
     email: "ya@ya.ru",
-    password: "",
-    repeatPassword: "",
-    citizenship: "",
-    termOfUse: true
-  },
-  errors: {
-    email: "",
-    password: "",
-    repeatPassword: "",
-    citizenship: "",
-    termOfUse: ""
   }
 };
 
-
-
-function _fakeSubmitLoading (fn) {
+function _fakeSubmitLoading (values, fn) {
+  console.log(values);
   fn(true);
   setTimeout(() => {
     fn(false);

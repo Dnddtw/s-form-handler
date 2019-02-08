@@ -19,6 +19,7 @@ export const fieldRequired = value => (value.length === 0 ? errorMessage.require
 
 const validHandler = (value, validateScheme) => {  
     if (!validateScheme) { return false; }
+
     for (let i = 0; i < validateScheme.length; i++ ) {
         const error = validateScheme[i](value);
         if (error) { return error }

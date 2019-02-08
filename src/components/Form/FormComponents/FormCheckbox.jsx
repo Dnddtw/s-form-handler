@@ -21,7 +21,7 @@ const FormCheckbox = props => {
             name={name}
             type="checkbox"
           />
-          <span className="checkbox__checkmark" /> {props.children}
+          <span className="checkbox__checkmark"/> {props.children}
         </label>
       </div>
     );

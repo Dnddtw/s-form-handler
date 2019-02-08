@@ -4,9 +4,6 @@ import { object, func } from 'prop-types';
 import validHandler from "./InputValidFunctions";
 
 class FormHandler extends Component {
-  validateScheme = this.props.validateScheme;
-  onSubmitFunction = this.props.onSubmitFunction;
-
   state = {
     values: {
       ...this.props.initialFormValues.values,
@@ -19,6 +16,7 @@ class FormHandler extends Component {
 
   _handleInputChange = (event) => {
     const { isValidAvailable } = this.state;
+    const { validateScheme } = this.props;
     const target = typeof event === "string" ? "country" : event.target;
     const value = target === "country" 
       ? event 
@@ -27,7 +25,7 @@ class FormHandler extends Component {
         : target.value;
 		
     const name = typeof target === "object" ? event.target.name : "citizenship" ;
-    const error = isValidAvailable ? validHandler(value, this.validateScheme[name]) : "";
+    const error = isValidAvailable ? validHandler(value, validateScheme[name]) : "";
 
     this.setState((prevState) => ({
       values: { ...prevState.values, [name]: value },
@@ -40,11 +38,13 @@ class FormHandler extends Component {
     event.preventDefault();
 
     // The function replaces inputInvalid message (erros)
+    const { validateScheme } = this.props;
     const errors = Object.assign({}, this.state.errors);
     const values = this.state.values;
 
-    for (let key in values) {
-      errors[key] = validHandler(values[key], this.validateScheme[key]);
+    for (let key in validateScheme) {
+      const v = values[key] || '';
+      errors[key] = validHandler(v, validateScheme[key]);
     }
 
     this.setState({
@@ -56,7 +56,9 @@ class FormHandler extends Component {
         return errors[element];
       });
 
-      if (canIChangeSubmitResponseState) { this.onSubmitFunction(this._setSubmitResponse) } 
+      if (canIChangeSubmitResponseState.length === 0) {
+        this.props.onSubmitFunction(this.state.values, this._setSubmitResponse);
+      }
     });
   };
 
@@ -64,29 +66,9 @@ class FormHandler extends Component {
     this.setState({ submitResponse })
   }
 
-  // _fakeSubmitLoading = () => {
-  //   const { errors } = this.state;
-    
-  //   const canIChangeSubmitResponseState = Object.keys(errors).filter((element) => {
-  //     return errors[element];
-  //   });
-
-  //   if (canIChangeSubmitResponseState.length === 0) {
-  //     this.setState({ submitResponse: true },
-  //       () => {
-  //         setTimeout(() => {
-  //           this.setState({
-  //             submitResponse: false
-  //           });
-  //         }, 10000);
-  //       }
-  //     );
-  //   }
-  // };
-
   _gatherTheProps = () => {
-    const { values, errors } = this.state;
-    const properties = { values, errors };
+    const { values, errors, submitResponse } = this.state;
+    const properties = { values, errors, submitResponse };
     return ({
       functions: {
         handleInputChange: this._handleInputChange,
@@ -108,14 +90,16 @@ class FormHandler extends Component {
 
 FormHandler.propTypes = {
   validateScheme: object,
-  initialFormValues: object.isRequired,
-  onSubmitFunction: func.isRequired,
+  initialFormValues: object,
+  onSubmitFunction: func,
 };
 
 FormHandler.defaultProps = {
+  initialFormValues: {},
   validateScheme: {},
   submitResponse: false,
-  isValidAvailable: false
+  isValidAvailable: false,
+  onSubmitFunction: () => {},
 };
 
 export default FormHandler;

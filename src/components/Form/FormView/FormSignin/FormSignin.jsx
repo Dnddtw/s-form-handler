@@ -3,14 +3,8 @@ import FormPattern from './FormPattern';
 import FormHandler from '../../FormHandler';
 import { validEmail, validPassword, fieldRequired } from '../../FormHandler/InputValidFunctions';
 
-const initialSigninValues = {
-  values: {
-    email: "",
-    password: ""
-  }
-};
-
-function _fakeSubmitLoading (fn) {
+function _fakeSubmitLoading (values, fn) {
+  console.log(values);
   fn(true);
   setTimeout(() => {
     fn(false);
@@ -26,7 +20,6 @@ const FormSignin = () => {
   return (
     <FormHandler 
       validateScheme={validateScheme}
-      initialFormValues={initialSigninValues}
       onSubmitFunction={_fakeSubmitLoading}
     >
       {(renderProps) => (
