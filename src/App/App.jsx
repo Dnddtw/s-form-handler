@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import FormSignin from "./Form/FormView/FormSignin/FormSignin";
-import FormSignup from "./Form/FormView/FormSignup/FormSignup";
+import FormSignin from "../_components/Form/FormView/FormSignin/FormSignin";
+import FormSignup from "../_components/Form/FormView/FormSignup/FormSignup";
 
 class App extends Component {
   render() {
