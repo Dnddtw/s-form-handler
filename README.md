@@ -39,4 +39,4 @@ A single Form component handler
 
 ## Published
 
-https://dnddtw.github.io/s-form-handler/
+https://npmjke.github.io/s-form-handler/
